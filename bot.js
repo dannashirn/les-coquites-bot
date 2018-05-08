@@ -6,8 +6,7 @@ var request = require('request');
 
 // var FCM = require('fcm-push');
 var TelegramBot = require('node-telegram-bot-api');
-//var token = '530409477:AAFgBEhdgeRPwTRLpmlkikvZMOqjraecpIc';
-var token = '574074491:AAG7aNa16z4slmyDS8r_YvkmUETm9wN2oW8';
+var token = '530409477:AAFgBEhdgeRPwTRLpmlkikvZMOqjraecpIc';
 var bot = new TelegramBot(token, {polling: true});
 var feriadosApi = "http://nolaborables.com.ar/api/v2/feriados/2018";
 var btcAPI = "https://api.coinmarketcap.com/v2/ticker/1";
