@@ -48,8 +48,8 @@ bot.onText(/\/nasa/, msg => {
   request.get(nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body)
     console.log(nasa.url)
-    bot.sendPhoto(chatId, nasa.url)
-    //bot.sendMessage(chatId, nasa.explanation)
+    bot.sendPhoto(chatId, nasa.hdurl)
+    bot.sendMessage(chatId, nasa.explanation)
   })
 });
 
