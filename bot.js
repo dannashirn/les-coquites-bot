@@ -47,8 +47,14 @@ bot.onText(/\/nasa/, msg => {
   const chatId = msg.chat.id;
   request.get(nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body)
-    console.log(nasa.url)
     bot.sendPhoto(chatId, nasa.hdurl)
+  })
+});
+
+bot.onText(/\/nasaText/, msg => {
+  const chatId = msg.chat.id;
+  request.get(nasaAPI, function(err, httpResponse, body) {
+    var nasa = JSON.parse(body)
     bot.sendMessage(chatId, nasa.explanation)
   })
 });
