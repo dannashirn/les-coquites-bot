@@ -9,6 +9,7 @@ var TelegramBot = require('node-telegram-bot-api');
 var token = '530409477:AAFgBEhdgeRPwTRLpmlkikvZMOqjraecpIc';
 var bot = new TelegramBot(token, {polling: true});
 var feriadosApi = "http://nolaborables.com.ar/api/v2/feriados/2018";
+var btcAPI = "https://api.coinmarketcap.com/v2/ticker/1";
 
 app.get("/", function (req, res){
     res.send("OK");
@@ -32,6 +33,14 @@ bot.onText(/\/feriados/, (msg) => {
 function mostrarFeriadoEnLinea(feriado, mesActual){
   return feriado.motivo + "("+ feriado.tipo +") "+ "dia: " + feriado.dia + "/" + mesActual;
 }
+
+bot.onText(/\/btc/, msg => {
+  request.get(btcAPI, function(err, httpResponse, body) {
+    var btc = JSON.parse(body)
+    console.log(btc)
+    bot.sendMessage(msg.chat.id, "$" + btc.data.quotes.USD.price)
+  })
+});
 
 // bot.on('message', (msg) => {
 //   const chatId = msg.chat.id;
