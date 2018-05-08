@@ -10,6 +10,7 @@ var token = '530409477:AAFgBEhdgeRPwTRLpmlkikvZMOqjraecpIc';
 var bot = new TelegramBot(token, {polling: true});
 var feriadosApi = "http://nolaborables.com.ar/api/v2/feriados/2018";
 var btcAPI = "https://api.coinmarketcap.com/v2/ticker/1";
+var nasaAPI = "https://api.nasa.gov/planetary/apod?api_key=CyE7Qqsj6zAPenKJzDt6OIDulpFFTrGTunguMLn4";
 
 app.get("/", function (req, res){
     res.send("OK");
@@ -73,6 +74,16 @@ bot.onText(/\/btc/, msg => {
   request.get(btcAPI, function(err, httpResponse, body) {
     var btc = JSON.parse(body)
     bot.sendMessage(msg.chat.id, "$" + btc.data.quotes.USD.price)
+  })
+});
+
+bot.onText(/\/nasa/, msg => {
+  const chatId = msg.chat.id;
+  request.get(nasaAPI, function(err, httpResponse, body) {
+    var nasa = JSON.parse(body)
+    console.log(nasa.url)
+    bot.sendPhoto(chatId, nasa.hdurl)
+    bot.sendMessage(chatId, nasa.explanation)
   })
 });
 
