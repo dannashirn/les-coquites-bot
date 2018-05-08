@@ -30,6 +30,41 @@ bot.onText(/\/feriados/, (msg) => {
   })
 });
 
+bot.onText(/\/proximoferiado/, msg => {
+  var mesActual = new Date().getMonth() + 1;
+  request.get(feriadosApi, function(err, httpResponse, body) {
+    var feriados = JSON.parse(body);
+    var feriado = proximoFeriado(feriados);
+    var feriadoMostrable = mostrarFeriadoEnLinea(feriado, mesActual);
+    var diasRestantes = diasHastaFeriado(feriado);
+    bot.sendMessage(
+      msg.chat.id,
+      "Faltan " + diasRestantes + " dias para el proximo feriado\r\n" + feriadoMostrable
+    );
+  });
+});
+
+function proximoFeriado(feriados) {
+  var today = new Date();
+  return feriados.filter(
+    f => f.mes >= today.getMonth() + 1 && f.dia >= today.getDate()
+  )[0];
+}
+
+function diasHastaFeriado(feriado) {
+  var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date();
+  var secondDate = new Date(
+    new Date().getFullYear(),
+    feriado.mes - 1,
+    feriado.dia
+  );
+
+  return Math.ceil(
+    Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay)
+  );
+}
+
 function mostrarFeriadoEnLinea(feriado, mesActual){
   return feriado.motivo + "("+ feriado.tipo +") "+ "dia: " + feriado.dia + "/" + mesActual;
 }
