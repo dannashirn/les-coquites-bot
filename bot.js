@@ -37,7 +37,6 @@ function mostrarFeriadoEnLinea(feriado, mesActual){
 bot.onText(/\/btc/, msg => {
   request.get(btcAPI, function(err, httpResponse, body) {
     var btc = JSON.parse(body)
-    console.log(btc)
     bot.sendMessage(msg.chat.id, "$" + btc.data.quotes.USD.price)
   })
 });
