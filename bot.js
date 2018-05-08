@@ -6,10 +6,12 @@ var request = require('request');
 
 // var FCM = require('fcm-push');
 var TelegramBot = require('node-telegram-bot-api');
-var token = '530409477:AAFgBEhdgeRPwTRLpmlkikvZMOqjraecpIc';
+//var token = '530409477:AAFgBEhdgeRPwTRLpmlkikvZMOqjraecpIc';
+var token = '574074491:AAG7aNa16z4slmyDS8r_YvkmUETm9wN2oW8';
 var bot = new TelegramBot(token, {polling: true});
 var feriadosApi = "http://nolaborables.com.ar/api/v2/feriados/2018";
 var btcAPI = "https://api.coinmarketcap.com/v2/ticker/1";
+var nasaAPI = "https://api.nasa.gov/planetary/apod?api_key=CyE7Qqsj6zAPenKJzDt6OIDulpFFTrGTunguMLn4";
 
 app.get("/", function (req, res){
     res.send("OK");
@@ -39,6 +41,16 @@ bot.onText(/\/btc/, msg => {
     var btc = JSON.parse(body)
     console.log(btc)
     bot.sendMessage(msg.chat.id, "$" + btc.data.quotes.USD.price)
+  })
+});
+
+bot.onText(/\/nasa/, msg => {
+  const chatId = msg.chat.id;
+  request.get(nasaAPI, function(err, httpResponse, body) {
+    var nasa = JSON.parse(body)
+    console.log(nasa.url)
+    bot.sendPhoto(chatId, nasa.url, {}, 'image/jpeg')
+    //bot.sendMessage(chatId, nasa.explanation)
   })
 });
 
