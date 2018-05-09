@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var request = require('request');
+require("./schedule")
 
 // var FCM = require('fcm-push');
 var TelegramBot = require('node-telegram-bot-api');
