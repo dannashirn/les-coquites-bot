@@ -12,6 +12,12 @@ var bot = new TelegramBot(token, {polling: true});
 var feriadosApi = "http://nolaborables.com.ar/api/v2/feriados/2018";
 var btcAPI = "https://api.coinmarketcap.com/v2/ticker/1";
 var nasaAPI = "https://api.nasa.gov/planetary/apod?api_key=CyE7Qqsj6zAPenKJzDt6OIDulpFFTrGTunguMLn4";
+var quotesAPI = {
+  url: "https://andruxnet-random-famous-quotes.p.mashape.com/cat=",
+  headers: {
+    'X-Mashape-Key': 'dITqRwBOt6mshm55nVGnfBU8bAVLp1MqSdRjsn3G3wFvdesZxZ'
+  }
+};
 
 app.get("/", function (req, res){
     res.send("OK");
@@ -103,3 +109,10 @@ var port = process.env.PORT || 3000;
 http.listen(port, function(){
   console.log('listening on *:' +port);
 });
+
+bot.onText(/\/celebrityQuote/, msg => {
+  request.get(quotesAPI, function(err,httpResponse,body){
+    var phrase = JSON.parse(body)
+    bot.sendMessage(msg.chat.id,"Frase: "+phrase.quote+"\r\n Autor: "+phrase.author)
+  })
+})
