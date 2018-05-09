@@ -157,6 +157,24 @@ function showDiasHastaJuevesDeCubaLibre(days) {
   }
 }
 
+bot.onText(/\/pokemon/, msg => {
+  const chatId = msg.chat.id;
+  var pokemon_number = (msg.text.split("/pokemon ").pop());  
+  console.log(apis.pokedex.concat(pokemon_number))
+  request.get(apis.pokedex.concat(pokemon_number), function(err, httpResponse, body){    
+   if(httpResponse.statusCode == 200){
+      var pokemon = JSON.parse(body);
+      bot.sendPhoto(chatId, pokemon.sprites.front_default)
+      bot.sendMessage(chatId, pokemon.name)
+    }else if(httpResponse.statusCode == 504) {
+      bot.sendMessage(chatId, "En estos momentos todos nuestros operadores se encuentran ocupados. Intente nuevamente mas tarde.")
+    }else {
+      bot.sendMessage(chatId, "Envia un numero de pokemon valido")
+    }
+ })
+})
+
+
 bot.onText(/\/libertad/, msg => {
   var timeTil6 = new Date(msg.date) - new Date()
 })
