@@ -8,5 +8,6 @@ module.exports = {
     headers: {
       "X-Mashape-Key": "dITqRwBOt6mshm55nVGnfBU8bAVLp1MqSdRjsn3G3wFvdesZxZ"
     }
-  }
+  },
+  haySubte: "https://haysubte.now.sh/api"
 };
