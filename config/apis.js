@@ -1,5 +1,5 @@
 module.exports = {
-  feriadosApi: "http://nolaborables.com.ar/api/v2/feriados/2018",
+  feriadosApi: "http://nolaborables.com.ar/api/v2/feriados/".concat(añoActual),
   btcAPI: "https://api.coinmarketcap.com/v2/ticker/1",
   nasaAPI:
     "https://api.nasa.gov/planetary/apod?api_key=CyE7Qqsj6zAPenKJzDt6OIDulpFFTrGTunguMLn4",
@@ -12,3 +12,5 @@ module.exports = {
   haySubte: "https://haysubte.now.sh/api",
   pokedex: "https://pokeapi.co/api/v2/pokemon-form/"
 };
+
+var añoActual = new Date().getFullYear;
