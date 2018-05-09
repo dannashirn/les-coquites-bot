@@ -131,7 +131,7 @@ http.listen(port, function(){
   console.log('listening on *:' +port);
 });
 
-bot.onText(/\/celebrityQuote/, msg => {
+bot.onText(/\/celebrityquotes/, msg => {
   request.get(apis.quotesAPI, function(err,httpResponse,body){
     var phrase = JSON.parse(body)
     bot.sendMessage(msg.chat.id,"Frase: "+phrase.quote+"\r\n Autor: "+phrase.author)
@@ -156,3 +156,7 @@ function showDiasHastaJuevesDeCubaLibre(days) {
       return "Faltan" + days + "dias para el jueves de cuba libre :(";
   }
 }
+
+bot.onText(/\/libertad/, msg => {
+  var timeTil6 = new Date(msg.date) - new Date()
+})
