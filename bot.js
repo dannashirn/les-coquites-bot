@@ -53,7 +53,7 @@ bot.onText(/\/nasa/, msg => {
 
 bot.onText(/\/nasaText/, msg => {
   const chatId = msg.chat.id;
-  request.get(nasaAPI, function(err, httpResponse, body) {
+  request.get(apis.nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body)
     bot.sendMessage(chatId, nasa.explanation)
   })
