@@ -175,6 +175,15 @@ bot.onText(/\/pokemon/, msg => {
 })
 
 
+bot.onText(/\/proximoafter/, msg => {
+  const chatId = msg.chat.id;
+  var after = new Date("2018-05-24");
+  var today = new Date();
+  var oneDay = 24 * 60 * 60 * 1000;
+  bot.sendMessage(chatId, "Faltan ".concat(Math.floor((after - today)/oneDay) + 1).concat(" dias para el proximo after en Madero"));
+})
+
+
 bot.onText(/\/libertad/, msg => {
   var timeTil6 = new Date(msg.date) - new Date()
 })
