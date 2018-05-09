@@ -92,6 +92,23 @@ bot.onText(/\/nasaText/, msg => {
   })
 });
 
+bot.onText(/\/subte/, msg => {
+  request.get(apis.haySubte, function(err, httpResponse, body) {
+    var estados = JSON.parse(body);
+    var showableStatuses = showStatus(estados);
+    bot.sendMessage(msg.chat.id, showableStatuses);
+  });
+});
+
+function showStatus(estados) {
+  var map = new Map(Object.entries(estados));
+  var showable = [];
+  map.forEach((v, k, o) => {
+    showable.push("Linea " + k + ": " + v.text);
+  });
+  return showable.join("\r\n");
+}
+
 // bot.on('message', (msg) => {
 //   const chatId = msg.chat.id;
 //
