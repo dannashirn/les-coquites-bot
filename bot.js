@@ -8,16 +8,8 @@ var request = require('request');
 var TelegramBot = require('node-telegram-bot-api');
 var keys = require('./config/keys')
 var token = keys.token;
+var apis = require('./config/apis')
 var bot = new TelegramBot(token, {polling: true});
-var feriadosApi = "http://nolaborables.com.ar/api/v2/feriados/2018";
-var btcAPI = "https://api.coinmarketcap.com/v2/ticker/1";
-var nasaAPI = "https://api.nasa.gov/planetary/apod?api_key=CyE7Qqsj6zAPenKJzDt6OIDulpFFTrGTunguMLn4";
-var quotesAPI = {
-  url: "https://andruxnet-random-famous-quotes.p.mashape.com/cat=",
-  headers: {
-    'X-Mashape-Key': 'dITqRwBOt6mshm55nVGnfBU8bAVLp1MqSdRjsn3G3wFvdesZxZ'
-  }
-};
 
 app.get("/", function (req, res){
     res.send("OK");
@@ -30,7 +22,7 @@ bot.onText(/\/hi/, (msg) => {
 
 bot.onText(/\/feriados/, (msg) => {
   var mesActual = new Date().getMonth()+1
-  request.get(feriadosApi, function(err, httpResponse, body) {
+  request.get(apis.feriadosApi, function(err, httpResponse, body) {
     var feriados = JSON.parse(body);
     var feriadosDelMes = feriados.filter(f => f.mes === mesActual);
     var feriadosMostrables = feriadosDelMes.map(f => mostrarFeriadoEnLinea(f, mesActual));
@@ -40,7 +32,7 @@ bot.onText(/\/feriados/, (msg) => {
 
 bot.onText(/\/proximoferiado/, msg => {
   var mesActual = new Date().getMonth() + 1;
-  request.get(feriadosApi, function(err, httpResponse, body) {
+  request.get(apis.feriadosApi, function(err, httpResponse, body) {
     var feriados = JSON.parse(body);
     var feriado = proximoFeriado(feriados);
     var feriadoMostrable = mostrarFeriadoEnLinea(feriado, mesActual);
@@ -78,7 +70,7 @@ function mostrarFeriadoEnLinea(feriado, mesActual){
 }
 
 bot.onText(/\/btc/, msg => {
-  request.get(btcAPI, function(err, httpResponse, body) {
+  request.get(apis.btcAPI, function(err, httpResponse, body) {
     var btc = JSON.parse(body)
     bot.sendMessage(msg.chat.id, "$" + btc.data.quotes.USD.price)
   })
@@ -86,7 +78,7 @@ bot.onText(/\/btc/, msg => {
 
 bot.onText(/\/nasa/, msg => {
   const chatId = msg.chat.id;
-  request.get(nasaAPI, function(err, httpResponse, body) {
+  request.get(apis.nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body)
     console.log(nasa.url)
     bot.sendPhoto(chatId, nasa.hdurl)
@@ -111,7 +103,7 @@ http.listen(port, function(){
 });
 
 bot.onText(/\/celebrityQuote/, msg => {
-  request.get(quotesAPI, function(err,httpResponse,body){
+  request.get(apis.quotesAPI, function(err,httpResponse,body){
     var phrase = JSON.parse(body)
     bot.sendMessage(msg.chat.id,"Frase: "+phrase.quote+"\r\n Autor: "+phrase.author)
   })
