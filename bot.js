@@ -131,3 +131,22 @@ bot.onText(/\/celebrityQuote/, msg => {
     bot.sendMessage(msg.chat.id,"Frase: "+phrase.quote+"\r\n Autor: "+phrase.author)
   })
 })
+
+bot.onText(/\/juevesdecubalibre/, msg => {
+  var days = Math.abs(new Date().getDay() - 4);
+  var showable = showDiasHastaJuevesDeCubaLibre(days);
+  bot.sendMessage(msg.chat.id, showable);
+});
+
+function showDiasHastaJuevesDeCubaLibre(days) {
+  switch (days) {
+    case 0:
+      return "Hoy es jueves de cuba libre!!!";
+      break;
+    case 1:
+      return "Mañana es jueves de cuba libre!!!";
+      break;
+    default:
+      return "Faltan" + days + "dias para el jueves de cuba libre :(";
+  }
+}
