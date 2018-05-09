@@ -177,10 +177,21 @@ bot.onText(/\/pokemon/, msg => {
 
 bot.onText(/\/proximoafter/, msg => {
   const chatId = msg.chat.id;
-  var after = new Date("2018-05-24");
+  var after = new Date(2018, 4, 24, 20, 30, 0, 0);
   var today = new Date();
   var oneDay = 24 * 60 * 60 * 1000;
-  bot.sendMessage(chatId, "Faltan ".concat(Math.floor((after - today)/oneDay) + 1).concat(" dias para el proximo after en Madero"));
+  if(after > today){
+    if((after - today)/oneDay < 1){
+      bot.sendMessage(chatId, "Hoy es el after! Un poco de luz entre tanta miseria y oscuridad")
+    }else if((after - today)/oneDay < 2){
+      bot.sendMessage(chatId, "El after en Madero es mañana")
+    }else{
+      bot.sendMessage(chatId, "Faltan ".concat(Math.floor((after - today)/oneDay) + 1).concat(" dias para el proximo after en Madero"));
+    }
+  }else{
+    bot.sendMessage(chatId, "El after ya paso, pero como siguen resacosos, no me cargaron cuando es el proximo")
+  }
+  
 })
 
 
