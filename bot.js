@@ -20,6 +20,11 @@ bot.onText(/\/hi/, (msg) => {
   bot.sendMessage(chatId, "Hola " + msg.from.first_name);
 });
 
+bot.onText(/\/null/, (msg) => {
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, "Null");
+});
+
 bot.onText(/\/feriados/, (msg) => {
   var mesActual = new Date().getMonth()+1
   request.get(apis.feriadosApi, function(err, httpResponse, body) {
