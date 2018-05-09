@@ -28,7 +28,7 @@ bot.onText(/\/null/, (msg) => {
 
 bot.onText(/\/feriados/, (msg) => {
   var mesActual = new Date().getMonth()+1
-  request.get(apis.feriadosApi, function(err, httpResponse, body) {
+  request.get(apis.feriadosApi, function(err, httpResponse, body) {    
     var feriados = JSON.parse(body);
     var feriadosDelMes = feriados.filter(f => f.mes === mesActual);
     var feriadosMostrables = feriadosDelMes.map(f => mostrarFeriadoEnLinea(f, mesActual));
