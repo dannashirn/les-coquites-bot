@@ -210,3 +210,9 @@ bot.onText(/^\/chucknorris(@HinchaBolasBot)?/, msg => {
     bot.sendMessage(msg.chat.id, joke.value)
   })
 })
+
+bot.onText(/^\/sugerencia(@HinchaBolasBot)?/, msg => {
+  var sugerencia = (msg.text.split("/sugerencia ").pop());
+  bot.sendMessage(msg.chat.id, "Tu sugerencia será elevada a quien corresponda, inútil")
+  bot.sendMessage(45873136, sugerencia, {disable_notification: true})
+})
