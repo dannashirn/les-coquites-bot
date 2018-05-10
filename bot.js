@@ -12,7 +12,7 @@ var token = keys.token;
 var apis = require('./config/apis')
 const ids = require('./config/id')
 var bot = new TelegramBot(token, {polling: true});
-const food = ["mc", "dandy", "office cook", "lupita", "central market", "tu mama", "havanna", "mostaza", "chino","italiano"];
+const food = ["mc", "dandy", "office cook", "lupita", "central market", "tu mama", "havanna", "mostaza", "el chino","el italiano"];
 
 app.get("/", function (req, res){
     res.send("OK");
