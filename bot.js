@@ -16,7 +16,7 @@ app.get("/", function (req, res){
     res.send("OK");
 });
 
-bot.onText(/\/hi/, (msg) => {
+bot.onText(/^\/hi$/, (msg) => {
   const chatId = msg.chat.id;
   if( msg.from.first_name === 'Tobias' || msg.from.first_name === 'Ignacio Javier'){
     bot.sendMessage(chatId, "No me rompas las bolas " + msg.from.first_name + " sos un pesado.");
@@ -26,12 +26,12 @@ bot.onText(/\/hi/, (msg) => {
   
 });
 
-bot.onText(/\/null/, (msg) => {
+bot.onText(/^\/null$/, (msg) => {
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, "Null");
 });
 
-bot.onText(/\/feriados/, (msg) => {
+bot.onText(/^\/feriados$/, (msg) => {
   var mesActual = new Date().getMonth()+1
   request.get(apis.feriadosApi, function(err, httpResponse, body) {    
     var feriados = JSON.parse(body);
@@ -41,7 +41,7 @@ bot.onText(/\/feriados/, (msg) => {
   })
 });
 
-bot.onText(/\/proximoferiado/, msg => {
+bot.onText(/^\/proximoferiado$/, msg => {
   var mesActual = new Date().getMonth() + 1;
   request.get(apis.feriadosApi, function(err, httpResponse, body) {
     var feriados = JSON.parse(body);
@@ -80,14 +80,14 @@ function mostrarFeriadoEnLinea(feriado, mesActual){
   return feriado.motivo + "("+ feriado.tipo +") "+ "dia: " + feriado.dia + "/" + mesActual;
 }
 
-bot.onText(/\/btc/, msg => {
+bot.onText(/^\/btc$/, msg => {
   request.get(apis.btcAPI, function(err, httpResponse, body) {
     var btc = JSON.parse(body)
     bot.sendMessage(msg.chat.id, "$" + btc.data.quotes.USD.price)
   })
 });
 
-bot.onText(/\/nasa/, msg => {
+bot.onText(/^\/nasa$/, msg => {
   const chatId = msg.chat.id;
   request.get(apis.nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body)
@@ -95,7 +95,7 @@ bot.onText(/\/nasa/, msg => {
   })
 });
 
-bot.onText(/\/nasaText/, msg => {
+bot.onText(/^\/nasaText$/, msg => {
   const chatId = msg.chat.id;
   request.get(apis.nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body)
@@ -103,7 +103,7 @@ bot.onText(/\/nasaText/, msg => {
   })
 });
 
-bot.onText(/\/subte/, msg => {
+bot.onText(/^\/subte$/, msg => {
   request.get(apis.haySubte, function(err, httpResponse, body) {
     var estados = JSON.parse(body);
     var showableStatuses = showStatus(estados);
@@ -136,14 +136,14 @@ http.listen(port, function(){
   console.log('listening on *:' +port);
 });
 
-bot.onText(/\/celebrityquotes/, msg => {
+bot.onText(/^\/celebrityquotes$/, msg => {
   request.get(apis.quotesAPI, function(err,httpResponse,body){
     var phrase = JSON.parse(body)
     bot.sendMessage(msg.chat.id,"Frase: "+phrase.quote+"\r\n Autor: "+phrase.author)
   })
 })
 
-bot.onText(/\/juevesdecubalibre/, msg => {
+bot.onText(/^\/juevesdecubalibre$/, msg => {
   var days = Math.abs(new Date().getDay() - 4);
   var showable = showDiasHastaJuevesDeCubaLibre(days);
   bot.sendMessage(msg.chat.id, showable);
@@ -162,7 +162,7 @@ function showDiasHastaJuevesDeCubaLibre(days) {
   }
 }
 
-bot.onText(/\/pokemon/, msg => {
+bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
   const chatId = msg.chat.id;
   var pokemon_number = (msg.text.split("/pokemon ").pop());  
   console.log(apis.pokedex.concat(pokemon_number))
@@ -180,7 +180,7 @@ bot.onText(/\/pokemon/, msg => {
 })
 
 
-bot.onText(/\/proximoafter/, msg => {
+bot.onText(/^\/proximoafter$/, msg => {
   const chatId = msg.chat.id;
   var after = new Date(2018, 4, 24, 20, 30, 0, 0);
   var today = new Date();
@@ -200,6 +200,6 @@ bot.onText(/\/proximoafter/, msg => {
 })
 
 
-bot.onText(/\/libertad/, msg => {
+bot.onText(/^\/libertad$/, msg => {
   var timeTil6 = new Date(msg.date) - new Date()
 })
