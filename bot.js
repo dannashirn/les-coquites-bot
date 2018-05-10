@@ -101,6 +101,7 @@ bot.onText(/^\/nasatext(@HinchaBolasBot)?$/, msg => {
   request.get(apis.nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body)
     bot.sendMessage(chatId, nasa.explanation)
+    bot.sendPhoto(chatId, nasa.hdurl)
   })
 });
 
