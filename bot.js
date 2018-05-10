@@ -18,7 +18,12 @@ app.get("/", function (req, res){
 
 bot.onText(/\/hi/, (msg) => {
   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, "Hola " + msg.from.first_name);
+  if( msg.from.first_name === 'Tobias' || msg.from.first_name === 'Ignacio Javier'){
+    bot.sendMessage(chatId, "No me rompas las bolas " + msg.from.first_name + " sos un pesado.");
+  } else{
+    bot.sendMessage(chatId, "Hola " + msg.from.first_name);
+  }
+  
 });
 
 bot.onText(/\/null/, (msg) => {
