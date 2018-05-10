@@ -10,6 +10,7 @@ var TelegramBot = require('node-telegram-bot-api');
 var keys = require('./config/keys')
 var token = keys.token;
 var apis = require('./config/apis')
+const ids = require('./config/id')
 var bot = new TelegramBot(token, {polling: true});
 
 app.get("/", function (req, res){
@@ -214,5 +215,5 @@ bot.onText(/^\/chucknorris(@HinchaBolasBot)?/, msg => {
 bot.onText(/^\/sugerencia(@HinchaBolasBot)?/, msg => {
   var sugerencia = (msg.text.split("/sugerencia ").pop());
   bot.sendMessage(msg.chat.id, "Tu sugerencia será elevada a quien corresponda, inútil")
-  bot.sendMessage(45873136, sugerencia, {disable_notification: true})
+  bot.sendMessage(ids.iganre_id, sugerencia, {disable_notification: true})
 })
