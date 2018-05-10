@@ -203,3 +203,10 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
 bot.onText(/^\/libertad(@HinchaBolasBot)?$/, msg => {
   var timeTil6 = new Date(msg.date) - new Date()
 })
+
+bot.onText(/^\/chucknorris(@HinchaBolasBot)?/, msg => {
+  request.get(apis.chuckNorris, (err, httpResponse, body) => {
+    var joke = JSON.parse(body)
+    bot.sendMessage(msg.chat.id, joke.value)
+  })
+})

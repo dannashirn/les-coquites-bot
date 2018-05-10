@@ -10,5 +10,6 @@ module.exports = {
     }
   },
   haySubte: "https://haysubte.now.sh/api",
-  pokedex: "https://pokeapi.co/api/v2/pokemon-form/"
+  pokedex: "https://pokeapi.co/api/v2/pokemon-form/",
+  chuckNorris: "https://api.chucknorris.io/jokes/random"
 };
