@@ -225,7 +225,7 @@ bot.onText(/^\/random [\d]+-[\d]+/, msg => {
   var max = numbers[1];
 
   if(min < max){
-      var randomNumber = Math.floor(Math.random()*(max-min+1)+min);
+      var randomNumber = Math.ceil(Math.random()*(max-min+1)+min);
       bot.sendMessage(msg.chat.id, randomNumber);
   }else {
       bot.sendMessage(msg.chat.id, "Primero el min despues el max pelotudo.")
