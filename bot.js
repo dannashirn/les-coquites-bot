@@ -95,7 +95,7 @@ bot.onText(/^\/nasa(@HinchaBolasBot)?$/, msg => {
   })
 });
 
-bot.onText(/^\/nasaText(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/nasatext(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
   request.get(apis.nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body)
