@@ -217,3 +217,17 @@ bot.onText(/^\/sugerencia(@HinchaBolasBot)?/, msg => {
   bot.sendMessage(msg.chat.id, "Tu sugerencia será elevada a quien corresponda, inútil")
   bot.sendMessage(ids.iganre_id, sugerencia, {disable_notification: true})
 })
+
+bot.onText(/^\/random [\d]+-[\d]+/, msg => {
+  var numbers = (msg.text.split("/random ").pop()).split("-");
+
+  var min = numbers[0];
+  var max = numbers[1];
+
+  if(min < max){
+      var randomNumber = Math.floor(Math.random()*(max-min+1)+min);
+      bot.sendMessage(msg.chat.id, randomNumber);
+  }else {
+      bot.sendMessage(msg.chat.id, "Primero el min despues el max pelotudo.")
+  }
+})
