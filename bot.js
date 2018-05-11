@@ -140,13 +140,6 @@ http.listen(port, function(){
   console.log('listening on *:' +port);
 });
 
-bot.onText(/^\/celebrityquotes(@HinchaBolasBot)?$/, msg => {
-  request.get(apis.quotesAPI, function(err,httpResponse,body){
-    var phrase = JSON.parse(body)
-    bot.sendMessage(msg.chat.id,"Frase: "+phrase.quote+"\r\n Autor: "+phrase.author)
-  })
-})
-
 bot.onText(/^\/juevesdecubalibre(@HinchaBolasBot)?$/, msg => {
   var days = (11 - new Date().getDay())%7;
   var showable = showDiasHastaJuevesDeCubaLibre(days);
