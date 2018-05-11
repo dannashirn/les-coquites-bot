@@ -214,7 +214,7 @@ bot.onText(/^\/libertad(@HinchaBolasBot)?$/, msg => {
   }else if(msgDate.getHours >= 21 || msgDate.getHours <= 11){
     bot.sendMessage(chatId, "La tortura diaria ya terminó, o no empezó, como quieras verlo...");
   }else{
-    var timeTil6 = String((21 - (msgDate.getHours())));
+    var timeTil6 = String((20 - (msgDate.getHours())));
     var minTilNextHour = String((59 - msgDate.getMinutes()));
     if((60 - msgDate.getMinutes()) < 10){
      minTilNextHour = "0".concat(minTilNextHour);
