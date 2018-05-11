@@ -147,7 +147,7 @@ bot.onText(/^\/celebrityquotes(@HinchaBolasBot)?$/, msg => {
 })
 
 bot.onText(/^\/juevesdecubalibre(@HinchaBolasBot)?$/, msg => {
-  var days = Math.abs(new Date().getDay() - 4);
+  var days = (11 - new Date().getDay())%7;
   var showable = showDiasHastaJuevesDeCubaLibre(days);
   bot.sendMessage(msg.chat.id, showable);
 });
@@ -161,7 +161,7 @@ function showDiasHastaJuevesDeCubaLibre(days) {
       return "Mañana es jueves de cuba libre!!!";
       break;
     default:
-      return "Faltan" + days + "dias para el jueves de cuba libre :(";
+      return "Faltan " + days + " dias para el jueves de cuba libre :(";
   }
 }
 
