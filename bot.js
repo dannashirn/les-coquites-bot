@@ -14,6 +14,8 @@ const ids = require('./config/id')
 var bot = new TelegramBot(token, {polling: true});
 const food = ["mc", "dandy", "office cook", "lupita", "central market", "tu mama", "havanna", "mostaza", "el chino","el italiano"];
 
+const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+
 app.get("/", function (req, res){
     res.send("OK");
 });
@@ -65,7 +67,6 @@ function proximoFeriado(feriados) {
 }
 
 function diasHastaFeriado(feriado) {
-  var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
   var firstDate = new Date();
   var secondDate = new Date(
     new Date().getFullYear(),
@@ -187,7 +188,7 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
   var after = new Date(2018, 4, 24, 20, 30, 0, 0);
   var today = new Date();
-  var oneDay = 24 * 60 * 60 * 1000;
+  
   if(after > today){
     if((after - today)/oneDay < 1){
       bot.sendMessage(chatId, "Hoy es el after! Un poco de luz entre tanta miseria y oscuridad")
@@ -204,7 +205,24 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
 
 
 bot.onText(/^\/libertad(@HinchaBolasBot)?$/, msg => {
-  var timeTil6 = new Date(msg.date) - new Date()
+  var now = new Date();
+  var msgDate = new Date(msg.date);
+  var today = now.getDay();
+  var chatId = msg.chat.id;
+
+  if(today == 6 || today == 7){
+    bot.sendMessage(chatId, "Hoy sos libre, aunque sea por un rato");
+  }else if(now.getHours >= 21 || now.getHours <= 11){
+    bot.sendMessage(chatId, "La tortura diaria ya terminó, o no empezó, como quieras verlo...");
+  }else{
+    var timeTil6 = String((21 - (now.getHours()-1)));
+    var minTilNextHour = String((59 - now.getMinutes()));
+    if((60 - now.getMinutes()) < 10){
+     minTilNextHour = "0".concat(minTilNextHour);
+    }
+  bot.sendMessage(chatId, "Faltan " + timeTil6 +":"+ minTilNextHour + " horas para la libertad. Algún día, todos seremos libres.")
+  }
+
 })
 
 bot.onText(/^\/chucknorris(@HinchaBolasBot)?/, msg => {
@@ -238,4 +256,3 @@ bot.onText(/^\/dondecomemos(@HinchaBolasBot)?$/, msg => {
     var randomNumber = Math.floor(Math.random()*(food.length+1));
     bot.sendMessage(msg.chat.id, "Hoy comemos en " + food[randomNumber] + "!");
 })
-
