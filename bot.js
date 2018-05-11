@@ -173,8 +173,7 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
   request.get(apis.pokedex.concat(pokemon_number), function(err, httpResponse, body){    
    if(httpResponse.statusCode == 200){
       var pokemon = JSON.parse(body);
-      bot.sendPhoto(chatId, pokemon.sprites.front_default)
-      bot.sendMessage(chatId, pokemon.name)
+      bot.sendPhoto(chatId, pokemon.sprites.front_default, {caption: pokemon.name})
     }else if(httpResponse.statusCode == 504) {
       bot.sendMessage(chatId, "En estos momentos todos nuestros operadores se encuentran ocupados. Intente nuevamente mas tarde.")
     }else {
