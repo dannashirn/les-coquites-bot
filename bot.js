@@ -186,7 +186,7 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
 
 bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
-  var after = new Date(2018, 4, 24, 20, 30, 0, 0);
+  var after = new Date(2018, 4, 24, 3, 0, 0, 0);
   var today = new Date();
   
   if(after > today){
