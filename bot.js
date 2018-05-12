@@ -139,13 +139,6 @@ http.listen(port, function(){
   console.log('listening on *:' +port);
 });
 
-bot.onText(/^\/celebrityquotes(@HinchaBolasBot)?$/, msg => {
-  request.get(apis.quotesAPI, function(err,httpResponse,body){
-    var phrase = JSON.parse(body)
-    bot.sendMessage(msg.chat.id,"Frase: "+phrase.quote+"\r\n Autor: "+phrase.author)
-  })
-})
-
 bot.onText(/^\/juevesdecubalibre(@HinchaBolasBot)?$/, msg => {
   var days = (11 - new Date().getDay())%7;
   var showable = showDiasHastaJuevesDeCubaLibre(days);
@@ -172,8 +165,7 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
   request.get(apis.pokedex.concat(pokemon_number), function(err, httpResponse, body){
    if(httpResponse.statusCode == 200){
       var pokemon = JSON.parse(body);
-      bot.sendPhoto(chatId, pokemon.sprites.front_default)
-      bot.sendMessage(chatId, pokemon.name)
+      bot.sendPhoto(chatId, pokemon.sprites.front_default, {caption: pokemon.name})
     }else if(httpResponse.statusCode == 504) {
       bot.sendMessage(chatId, "En estos momentos todos nuestros operadores se encuentran ocupados. Intente nuevamente mas tarde.")
     }else {
@@ -204,23 +196,22 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
 
 
 bot.onText(/^\/libertad(@HinchaBolasBot)?$/, msg => {
-  var msgDate = new Date(msg.date*1000);
-  var today = msgDate.getDay();
+  var now = new Date();
+  var today = now.getDay();
   var chatId = msg.chat.id;
 
   if(today == 6 || today == 0){
-    bot.sendMessage(chatId, "Hoy sos libre, aunque sea por un rato");
-  }else if(msgDate.getHours >= 21 || msgDate.getHours <= 11){
+    bot.sendMessage(chatId, "Hoy sos 'libre', aunque sea por un rato...");
+  }else if(now.getHours() >= 21 || now.getHours() <= 11){
     bot.sendMessage(chatId, "La tortura diaria ya terminó, o no empezó, como quieras verlo...");
   }else{
-    var timeTil6 = String((20 - (msgDate.getHours())));
-    var minTilNextHour = String((59 - msgDate.getMinutes()));
-    if((60 - msgDate.getMinutes()) < 10){
+    var timeTil6 = String((20 - (now.getHours())));
+    var minTilNextHour = String((59 - now.getMinutes()));
+    if((60 - now.getMinutes()) < 10){
      minTilNextHour = "0".concat(minTilNextHour);
     }
   bot.sendMessage(chatId, "Faltan " + timeTil6 +":"+ minTilNextHour + " horas para la libertad. Algún día, todos seremos libres.")
   }
-
 })
 
 bot.onText(/^\/chucknorris(@HinchaBolasBot)?/, msg => {
