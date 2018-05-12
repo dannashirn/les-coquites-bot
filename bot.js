@@ -3,9 +3,8 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var request = require('request');
-require("./schedule")
+require("./schedule");
 
-// var FCM = require('fcm-push');
 var TelegramBot = require('node-telegram-bot-api');
 var keys = require('./config/keys')
 var token = keys.token;
@@ -27,7 +26,7 @@ bot.onText(/^\/hi(@HinchaBolasBot)?$/, (msg) => {
   } else{
     bot.sendMessage(chatId, "Hola " + msg.from.first_name);
   }
-  
+
 });
 
 bot.onText(/^\/null(@HinchaBolasBot)?$/, (msg) => {
@@ -37,7 +36,7 @@ bot.onText(/^\/null(@HinchaBolasBot)?$/, (msg) => {
 
 bot.onText(/^\/feriados(@HinchaBolasBot)?$/, (msg) => {
   var mesActual = new Date().getMonth()+1
-  request.get(apis.feriadosApi, function(err, httpResponse, body) {    
+  request.get(apis.feriadosApi, function(err, httpResponse, body) {
     var feriados = JSON.parse(body);
     var feriadosDelMes = feriados.filter(f => f.mes === mesActual);
     var feriadosMostrables = feriadosDelMes.map(f => mostrarFeriadoEnLinea(f, mesActual));
@@ -161,9 +160,9 @@ function showDiasHastaJuevesDeCubaLibre(days) {
 
 bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
   const chatId = msg.chat.id;
-  var pokemon_number = (msg.text.split("/pokemon ").pop());  
+  var pokemon_number = (msg.text.split("/pokemon ").pop());
   console.log(apis.pokedex.concat(pokemon_number))
-  request.get(apis.pokedex.concat(pokemon_number), function(err, httpResponse, body){    
+  request.get(apis.pokedex.concat(pokemon_number), function(err, httpResponse, body){
    if(httpResponse.statusCode == 200){
       var pokemon = JSON.parse(body);
       bot.sendPhoto(chatId, pokemon.sprites.front_default, {caption: pokemon.name})
@@ -180,7 +179,7 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
   var after = new Date(2018, 4, 24, 3, 0, 0, 0);
   var today = new Date();
-  
+
   if(after > today){
     if((after - today)/oneDay < 1){
       bot.sendMessage(chatId, "Hoy es el after! Un poco de luz entre tanta miseria y oscuridad")
@@ -192,7 +191,7 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   }else{
     bot.sendMessage(chatId, "El after ya paso, pero como siguen resacosos, no me cargaron cuando es el proximo")
   }
-  
+
 })
 
 
@@ -246,3 +245,67 @@ bot.onText(/^\/dondecomemos(@HinchaBolasBot)?$/, msg => {
     var randomNumber = Math.floor(Math.random()*(food.length+1));
     bot.sendMessage(msg.chat.id, "Hoy comemos en " + food[randomNumber] + "!");
 })
+
+//Agregar tareas por hacer
+bot.onText(/^\/todo [a-zA-Z0-9_ ]*/, msg => {
+  var text = (msg.text.split("/todo ")).pop();
+  var todoListSaved;
+  request.get(apis.todoList, function(err, httpResponse, body) {
+    todoListSaved = JSON.parse(body);
+    var newTodo = {};
+    var newId = todoListSaved.length;
+    newTodo.id = newId;
+    newTodo.text = text;
+    newTodo.state = "☓";
+    todoListSaved.push(newTodo);
+    request({url:apis.todoList, method:'PUT', json: todoListSaved}, function(request, response){
+      bot.sendMessage(msg.chat.id, "TodoList Updated");
+    })
+  })
+})
+
+//Consuntal lista de tareas
+bot.onText(/^\/todolist/, msg => {
+  request.get(apis.todoList, function(err, httpResponse, body) {
+    var todoList = JSON.parse(body);
+    if(todoList.length !== 0){
+      var todoListMostrable = todoList.map(a => mostrarTareaEnLinea(a));
+      todoListMostrable = todoListMostrable.join("\r\n");
+      bot.sendMessage(msg.chat.id, todoListMostrable);
+    }else{
+      bot.sendMessage(msg.chat.id, "Todo list vacia");
+    }
+  })
+})
+
+//Mark todo list
+bot.onText(/^\/checktodo [1-9]\d?\d?/, msg => {
+  var idTodo = parseInt((msg.text.split("/checktodo ")).pop());
+  request.get(apis.todoList, function(err, httpResponse, body) {
+    var todoList = JSON.parse(body);
+    var check = false;
+    todoList.forEach(function(elem){
+      if(idTodo === elem.id){
+        check = true;
+        elem.state = "✓";
+        request({url:apis.todoList, method:'PUT', json: todoList}, function(request, response){
+          bot.sendMessage(msg.chat.id, "OK: tarea id: " + elem.id);
+        })
+      }
+    })
+    if(!check){
+      bot.sendMessage(msg.chat.id, "No existe tarea.");
+    }
+  })
+})
+
+//Reset todolist
+bot.onText(/^\/resettodolist/, msg => {
+  request({url:apis.todoList, method:'PUT', json: []}, function(request, response){
+    bot.sendMessage(msg.chat.id, "Reset todo list");
+  })
+})
+
+function mostrarTareaEnLinea(tarea){
+  return tarea.id + ' |'+tarea.state+'| ' + tarea.text;
+}

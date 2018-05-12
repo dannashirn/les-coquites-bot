@@ -4,5 +4,6 @@ module.exports = {
   nasaAPI: "https://api.nasa.gov/planetary/apod?api_key=CyE7Qqsj6zAPenKJzDt6OIDulpFFTrGTunguMLn4",
   haySubte: "https://haysubte.now.sh/api",
   pokedex: "https://pokeapi.co/api/v2/pokemon-form/",
-  chuckNorris: "https://api.chucknorris.io/jokes/random"
+  chuckNorris: "https://api.chucknorris.io/jokes/random",
+  todoList: "https://api.myjson.com/bins/1849jq"
 };
