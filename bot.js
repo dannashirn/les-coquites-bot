@@ -279,7 +279,7 @@ bot.onText(/^\/todolist/, msg => {
 })
 
 //Mark todo list
-bot.onText(/^\/checktodo [1-9]\d?\d?/, msg => {
+bot.onText(/^\/checktodo [0-9]\d?\d?/, msg => {
   var idTodo = parseInt((msg.text.split("/checktodo ")).pop());
   request.get(apis.todoList, function(err, httpResponse, body) {
     var todoList = JSON.parse(body);
