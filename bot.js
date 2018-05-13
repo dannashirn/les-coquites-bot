@@ -309,3 +309,21 @@ bot.onText(/^\/resettodolist/, msg => {
 function mostrarTareaEnLinea(tarea){
   return tarea.id + ' |'+tarea.state+'| ' + tarea.text;
 }
+
+bot.onText(/^\/cleanchecked(@HinchaBolasBot)?$/, msg => {
+  request.get(apis.todoList, function(err, httpResponse, body) {
+    var todoList = JSON.parse(body);
+    console.log(todoList);
+    todoList.forEach(function(elem){
+      if(elem.state === "✓"){
+        todoList.splice(todoList.indexOf(elem), 1)
+      }
+    })
+    todoList.forEach(function(elem) {
+      elem.id = todoList.indexOf(elem)
+    })
+      request({url:apis.todoList, method:'PUT', json: todoList}, function(){
+        bot.sendMessage(msg.chat.id, "Checked items borrados");
+    })
+  })
+})
