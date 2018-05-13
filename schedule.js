@@ -9,7 +9,7 @@ module.exports =
 
 
 module.exports =
-    schedule.scheduleJob("*/1 * * * *", () => {
+    schedule.scheduleJob("*/5 * * * *", () => {
     request.get(apis.haySubte, function(err, httpResponse, body) {
       request({url:apis.subtePersistido, method:'PUT', json: JSON.parse(body)})
     })
