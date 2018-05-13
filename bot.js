@@ -5,6 +5,7 @@ var http = require('http').Server(app);
 var request = require('request');
 require("./schedule");
 
+
 var TelegramBot = require('node-telegram-bot-api');
 var keys = require('./config/keys')
 var token = keys.token;
@@ -19,10 +20,12 @@ app.get("/", function (req, res){
     res.send("OK");
 });
 
+
 bot.onText(/^\/hi(@HinchaBolasBot)?$/, (msg) => {
   const chatId = msg.chat.id;
   if( msg.from.first_name === 'Tobias' || msg.from.first_name === 'Ignacio Javier'){
     bot.sendMessage(chatId, "No me rompas las bolas " + msg.from.first_name + " sos un pesado.");
+    bot.sendMessage(chatId, api_subte.getLinesStatus());
   } else{
     bot.sendMessage(chatId, "Hola " + msg.from.first_name);
   }
@@ -107,7 +110,7 @@ bot.onText(/^\/nasatext(@HinchaBolasBot)?$/, msg => {
 });
 
 bot.onText(/^\/subte(@HinchaBolasBot)?$/, msg => {
-  request.get(apis.haySubte, function(err, httpResponse, body) {
+  request.get(apis.subtePersistido, function(err, httpResponse, body) {
     var estados = JSON.parse(body);
     var showableStatuses = showStatus(estados);
     bot.sendMessage(msg.chat.id, showableStatuses);
