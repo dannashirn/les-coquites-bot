@@ -314,15 +314,12 @@ function mostrarTareaEnLinea(tarea){
 bot.onText(/^\/cleanchecked(@HinchaBolasBot)?$/, msg => {
   request.get(apis.todoList, function(err, httpResponse, body) {
     var todoList = JSON.parse(body);
-    console.log(todoList);
-    todoList.forEach(function(elem){
-      if(elem.state === "✓"){
-        todoList.splice(todoList.indexOf(elem), 1)
-      }
-    })
+    todoList = todoList.filter(elem => elem.state === "☓");
+
     todoList.forEach(function(elem) {
       elem.id = todoList.indexOf(elem)
     })
+
       request({url:apis.todoList, method:'PUT', json: todoList}, function(){
         bot.sendMessage(msg.chat.id, "Checked items borrados");
     })
