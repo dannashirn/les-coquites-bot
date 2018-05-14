@@ -357,7 +357,7 @@ bot.onText(/^\/unchecktodo [0-9]\d?\d?/, msg => {
 
     todoList[idTodo].state = "☓"
     request({ url: apis.todoList, method: 'PUT', json: todoList }, function (request, response) {
-      bot.sendMessage(msg.chat.id, "No OK: tarea id: " + idTodo);
+      bot.sendMessage(msg.chat.id, "Destildada tarea " + idTodo);
     })
   })
 })
