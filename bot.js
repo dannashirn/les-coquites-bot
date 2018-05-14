@@ -333,3 +333,24 @@ bot.onText(/^\/dolar(@HinchaBolasBot)?$/, msg => {
     bot.sendMessage(chatId, "El dolar libre está $".concat(dolar.libre).concat(" y el blue $").concat(dolar.blue));
   })
 })
+
+
+bot.onText(/^\/cuandocomemos(@HinchaBolasBot)?$/, msg => {
+  const chatId = msg.chat.id;
+  var now = (new Date()).getHours();
+  if(now === 15){
+    bot.sendMessage(chatId, "Qué hacés preguntando esto? Deberiás estar hincando el diente")
+  }else if(now === 16){
+    bot.sendMessage(chatId, "Más te vale ya haber comido, y estar ansioso por almorzar mañana")
+  }else if(now > 16){
+    bot.sendMessage(chatId, "Pará emoción, aguantá hasta mañana")
+  }else if(now < 9){
+    bot.sendMessage(chatId, "Si tenés hambre comete una manzana")
+  }else{
+    if((14 - now) > 0){
+    bot.sendMessage(chatId, "Comemos en ".concat(14 - now).concat(":").concat(60 - (new Date()).getMinutes()).concat("horas"));
+    }else{
+    bot.sendMessage(chatId, "Comemos en ".concat(60 - (new Date()).getMinutes()).concat("minutos"));
+    }
+  }
+})
