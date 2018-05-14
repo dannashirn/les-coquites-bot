@@ -108,7 +108,7 @@ bot.onText(/^\/nasatext(@HinchaBolasBot)?$/, msg => {
 });
 
 bot.onText(/^\/subte(@HinchaBolasBot)?$/, msg => {
-  request.get(apis.haySubte, function(err, httpResponse, body) {
+  request.get(apis.subtePersistido, function(err, httpResponse, body) {
     var estados = JSON.parse(body);
     var showableStatuses = showStatus(estados);
     bot.sendMessage(msg.chat.id, showableStatuses);
