@@ -7,5 +7,6 @@ module.exports = {
   pokedex: "https://pokeapi.co/api/v2/pokemon-form/",
   chuckNorris: "https://api.chucknorris.io/jokes/random",
   todoList: "https://api.myjson.com/bins/1849jq",
-  dolar: "http://ws.geeklab.com.ar/dolar/get-dolar-json.php"
+  dolar: "http://ws.geeklab.com.ar/dolar/get-dolar-json.php",
+  atr: "https://api.myjson.com/bins/pd72u"
 };

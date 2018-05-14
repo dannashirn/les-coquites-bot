@@ -361,3 +361,10 @@ bot.onText(/^\/unchecktodo [0-9]\d?\d?/, msg => {
     })
   })
 })
+
+bot.onText(/^\/atr$/, msg => {
+  request.get(apis.atr, (err, response, body) => {
+    var audios = JSON.parse(body)
+    bot.sendAudio(msg.chat.id,audios[Math.floor(Math.random()*audios.length)])
+  })
+})
