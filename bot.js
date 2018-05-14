@@ -69,9 +69,10 @@ function proximoFeriado(feriados) {
 function diasHastaFeriado(feriado) {
   var firstDate = new Date();
   var secondDate = new Date(
-    new Date().getFullYear(),
+    firstDate.getFullYear(),
     feriado.mes - 1,
-    feriado.dia
+    feriado.dia,
+    3
   );
 
   return Math.ceil(
