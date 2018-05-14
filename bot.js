@@ -344,3 +344,19 @@ bot.onText(/^\/cuandocomemos(@HinchaBolasBot)?$/, msg => {
     }
   }
 })
+
+bot.onText(/^\/unchecktodo [0-9]\d?\d?/, msg => {
+  var idTodo = parseInt((msg.text.split("/unchecktodo ")).pop());
+  request.get(apis.todoList, function (err, httpResponse, body) {
+    var todoList = JSON.parse(body);
+    if (idTodo >= todoList.length) {
+      bot.sendMessage(msg.chat.id, "No existe tarea.");
+      return
+    }
+
+    todoList[idTodo].state = "☓"
+    request({ url: apis.todoList, method: 'PUT', json: todoList }, function (request, response) {
+      bot.sendMessage(msg.chat.id, "No OK: tarea id: " + idTodo);
+    })
+  })
+})
