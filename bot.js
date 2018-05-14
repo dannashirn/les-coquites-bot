@@ -5,6 +5,7 @@ var http = require('http').Server(app);
 var request = require('request');
 require("./schedule");
 
+
 var TelegramBot = require('node-telegram-bot-api');
 var keys = require('./config/keys')
 var token = keys.token;
@@ -325,5 +326,13 @@ bot.onText(/^\/cleanchecked(@HinchaBolasBot)?$/, msg => {
       request({url:apis.todoList, method:'PUT', json: todoList}, function(){
         bot.sendMessage(msg.chat.id, "Checked items borrados");
     })
+  })
+})
+
+bot.onText(/^\/dolar(@HinchaBolasBot)?$/, msg => {
+  var chatId = msg.chat.id;
+  request.get(apis.dolar, function(err, httpResponse, body){
+    var dolar = JSON.parse(body);
+    bot.sendMessage(chatId, "El dolar libre está $".concat(dolar.libre).concat(" y el blue $").concat(dolar.blue));
   })
 })
