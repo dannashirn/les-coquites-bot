@@ -251,15 +251,13 @@ bot.onText(/^\/dondecomemos(@HinchaBolasBot)?$/, msg => {
 bot.onText(/^\/todo [a-zA-Z0-9_ ]*/, msg => {
   var text = (msg.text.split("/todo ")).pop();
   var todoListSaved;
-  request.get(apis.todoList, function(err, httpResponse, body) {
+  request.get(apis.todoList, function (err, httpResponse, body) {
     todoListSaved = JSON.parse(body);
     var newTodo = {};
-    var newId = todoListSaved.length;
-    newTodo.id = newId;
     newTodo.text = text;
     newTodo.state = "☓";
     todoListSaved.push(newTodo);
-    request({url:apis.todoList, method:'PUT', json: todoListSaved}, function(request, response){
+    request({ url: apis.todoList, method: 'PUT', json: todoListSaved }, function (request, response) {
       bot.sendMessage(msg.chat.id, "TodoList Updated");
     })
   })
@@ -267,13 +265,13 @@ bot.onText(/^\/todo [a-zA-Z0-9_ ]*/, msg => {
 
 //Consuntal lista de tareas
 bot.onText(/^\/todolist/, msg => {
-  request.get(apis.todoList, function(err, httpResponse, body) {
+  request.get(apis.todoList, function (err, httpResponse, body) {
     var todoList = JSON.parse(body);
-    if(todoList.length !== 0){
-      var todoListMostrable = todoList.map(a => mostrarTareaEnLinea(a));
+    if (todoList.length !== 0) {
+      var todoListMostrable = todoList.map(a => mostrarTareaEnLinea(a, todoList.indexOf(a)));
       todoListMostrable = todoListMostrable.join("\r\n");
       bot.sendMessage(msg.chat.id, todoListMostrable);
-    }else{
+    } else {
       bot.sendMessage(msg.chat.id, "Todo list vacia");
     }
   })
@@ -282,21 +280,17 @@ bot.onText(/^\/todolist/, msg => {
 //Mark todo list
 bot.onText(/^\/checktodo [0-9]\d?\d?/, msg => {
   var idTodo = parseInt((msg.text.split("/checktodo ")).pop());
-  request.get(apis.todoList, function(err, httpResponse, body) {
+  request.get(apis.todoList, function (err, httpResponse, body) {
     var todoList = JSON.parse(body);
-    var check = false;
-    todoList.forEach(function(elem){
-      if(idTodo === elem.id){
-        check = true;
-        elem.state = "✓";
-        request({url:apis.todoList, method:'PUT', json: todoList}, function(request, response){
-          bot.sendMessage(msg.chat.id, "OK: tarea id: " + elem.id);
-        })
-      }
-    })
-    if(!check){
+    if (idTodo >= todoList.length) {
       bot.sendMessage(msg.chat.id, "No existe tarea.");
+      return
     }
+
+    todoList[idTodo].state = "✓"
+    request({ url: apis.todoList, method: 'PUT', json: todoList }, function (request, response) {
+      bot.sendMessage(msg.chat.id, "OK: tarea id: " + idTodo);
+    })
   })
 })
 
@@ -307,21 +301,17 @@ bot.onText(/^\/resettodolist/, msg => {
   })
 })
 
-function mostrarTareaEnLinea(tarea){
-  return tarea.id + ' |'+tarea.state+'| ' + tarea.text;
+function mostrarTareaEnLinea(tarea, index) {
+  return index + ' | ' + tarea.state + ' | ' + tarea.text;
 }
 
 bot.onText(/^\/cleanchecked(@HinchaBolasBot)?$/, msg => {
-  request.get(apis.todoList, function(err, httpResponse, body) {
+  request.get(apis.todoList, function (err, httpResponse, body) {
     var todoList = JSON.parse(body);
     todoList = todoList.filter(elem => elem.state === "☓");
 
-    todoList.forEach(function(elem) {
-      elem.id = todoList.indexOf(elem)
-    })
-
-      request({url:apis.todoList, method:'PUT', json: todoList}, function(){
-        bot.sendMessage(msg.chat.id, "Checked items borrados");
+    request({ url: apis.todoList, method: 'PUT', json: todoList }, function () {
+      bot.sendMessage(msg.chat.id, "Checked items borrados");
     })
   })
 })
