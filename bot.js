@@ -1,9 +1,12 @@
+const springId = -240939754;
+const lunchId = -182762392;
+
 'use strict';
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var request = require('request');
-require("./schedule");
+
 
 
 var TelegramBot = require('node-telegram-bot-api');
@@ -20,7 +23,7 @@ app.get("/", function (req, res){
     res.send("OK");
 });
 
-bot.onText(/^\/hi(@HinchaBolasBot)?$/, (msg) => {
+bot.onText(/^\/hsi(@HinchaBolasBot)?$/, (msg) => {
   const chatId = msg.chat.id;
   if( msg.from.first_name === 'Tobias' || msg.from.first_name === 'Ignacio Javier'){
     bot.sendMessage(chatId, "No me rompas las bolas " + msg.from.first_name + " sos un pesado.");
@@ -368,3 +371,19 @@ bot.onText(/^\/atr$/, msg => {
     bot.sendAudio(msg.chat.id,audios[Math.floor(Math.random()*audios.length)])
   })
 })
+
+
+/////////////////////////////////////SUBTE AUTOMATICO///////////////////////////////////
+module.exports = {
+  alertSubte: function(bodyParsed){
+    console.log("a bot.js llego: " + (bodyParsed));
+    request.get(apis.subtePersistido, function (err, httpResponse, body) {
+      if (!(JSON.parse(body) === bodyParsed)){
+        bot.sendMessage(lunchId, bodyParsed)
+        bot.sendMessage(springId, bodyParsed)
+      }
+    })
+  },
+};
+
+require("./schedule");
