@@ -376,11 +376,11 @@ bot.onText(/^\/atr$/, msg => {
 /////////////////////////////////////SUBTE AUTOMATICO///////////////////////////////////
 module.exports = {
   alertSubte: function(bodyParsed){
-    console.log("a bot.js llego: " + (bodyParsed));
+    console.log(bodyParsed);
     request.get(apis.subtePersistido, function (err, httpResponse, body) {
       if (!(JSON.parse(body) === bodyParsed)){
-        bot.sendMessage(lunchId, bodyParsed)
-        bot.sendMessage(springId, bodyParsed)
+        bot.sendMessage(lunchId, String(bodyParsed))
+        bot.sendMessage(springId, showStatus(bodyParsed))
       }
     })
   },
