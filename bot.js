@@ -244,7 +244,7 @@ bot.onText(/^\/random [\d]+-[\d]+$/, msg => {
 })
 
 bot.onText(/^\/dondecomemos(@HinchaBolasBot)?$/, msg => {
-    var randomNumber = Math.floor(Math.random()*(food.length+1));
+    var randomNumber = Math.floor(Math.random()*(food.length));
     bot.sendMessage(msg.chat.id, "Hoy comemos en " + food[randomNumber] + "!");
 })
 
