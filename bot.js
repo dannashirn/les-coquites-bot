@@ -7,8 +7,6 @@ var app = express();
 var http = require('http').Server(app);
 var request = require('request');
 
-
-
 var TelegramBot = require('node-telegram-bot-api');
 var keys = require('./config/keys')
 var token = keys.token;
@@ -23,7 +21,7 @@ app.get("/", function (req, res){
     res.send("OK");
 });
 
-bot.onText(/^\/hsi(@HinchaBolasBot)?$/, (msg) => {
+bot.onText(/^\/hi(@HinchaBolasBot)?$/, (msg) => {
   const chatId = msg.chat.id;
   if( msg.from.first_name === 'Tobias' || msg.from.first_name === 'Ignacio Javier'){
     bot.sendMessage(chatId, "No me rompas las bolas " + msg.from.first_name + " sos un pesado.");
@@ -372,17 +370,16 @@ bot.onText(/^\/atr$/, msg => {
   })
 })
 
-
 /////////////////////////////////////SUBTE AUTOMATICO///////////////////////////////////
 module.exports = {
   alertSubte: function(bodyParsed){
-    console.log(bodyParsed);
     request.get(apis.subtePersistido, function (err, httpResponse, body) {
-      if (!(JSON.parse(body) === bodyParsed)){
-        bot.sendMessage(lunchId, String(bodyParsed))
+      if (showStatus(JSON.parse(body)) != showStatus(bodyParsed)){
+        bot.sendMessage(lunchId, showStatus(bodyParsed))
         bot.sendMessage(springId, showStatus(bodyParsed))
       }
-    })
+      request({url:apis.subtePersistido, method:'PUT', json: bodyParsed});
+    });
   },
 };
 
