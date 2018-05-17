@@ -1,10 +1,11 @@
+const springId = -240939754;
+const lunchId = -182762392;
+
 'use strict';
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var request = require('request');
-require("./schedule");
-
 
 var TelegramBot = require('node-telegram-bot-api');
 var keys = require('./config/keys')
@@ -368,3 +369,18 @@ bot.onText(/^\/atr$/, msg => {
     bot.sendAudio(msg.chat.id,audios[Math.floor(Math.random()*audios.length)])
   })
 })
+
+/////////////////////////////////////SUBTE AUTOMATICO///////////////////////////////////
+module.exports = {
+  alertSubte: function(bodyParsed){
+    request.get(apis.subtePersistido, function (err, httpResponse, body) {
+      if (showStatus(JSON.parse(body)) != showStatus(bodyParsed)){
+        bot.sendMessage(lunchId, showStatus(bodyParsed))
+        bot.sendMessage(springId, showStatus(bodyParsed))
+      }
+      request({url:apis.subtePersistido, method:'PUT', json: bodyParsed});
+    });
+  },
+};
+
+require("./schedule");
