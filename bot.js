@@ -387,7 +387,7 @@ module.exports = {
   },
 };
 
-bot.onText(/^\/suscribesubte(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/subscribesubte(@HinchaBolasBot)?$/, msg => {
   chatId = msg.chat.id;
   request.get(apis.suscripcionSubte, function(err, httpResponse, body){
     var lista = JSON.parse(body);
@@ -401,7 +401,7 @@ bot.onText(/^\/suscribesubte(@HinchaBolasBot)?$/, msg => {
   })
 })
 
-bot.onText(/^\/unsuscribesubte(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/unsubscribesubte(@HinchaBolasBot)?$/, msg => {
   chatId = msg.chat.id;
   request.get(apis.suscripcionSubte, function(err, httpResponse, body){
     var lista = JSON.parse(body);
