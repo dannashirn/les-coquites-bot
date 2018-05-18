@@ -375,12 +375,44 @@ module.exports = {
   alertSubte: function(bodyParsed){
     request.get(apis.subtePersistido, function (err, httpResponse, body) {
       if (showStatus(JSON.parse(body)) != showStatus(bodyParsed)){
-        bot.sendMessage(lunchId, showStatus(bodyParsed))
-        bot.sendMessage(springId, showStatus(bodyParsed))
+        request.get(apis.suscripcionSubte, function (err, httpResponse, bodySecond) {
+          listaChatId = JSON.parse(bodySecond);
+          listaChatId.forEach(function(chatId){
+            bot.sendMessage(chatId, showStatus(bodyParsed))
+          })
+        })
       }
       request({url:apis.subtePersistido, method:'PUT', json: bodyParsed});
     });
   },
 };
+
+bot.onText(/^\/suscribesubte(@HinchaBolasBot)?$/, msg => {
+  chatId = msg.chat.id;
+  request.get(apis.suscripcionSubte, function(err, httpResponse, body){
+    var lista = JSON.parse(body);
+    if(lista.includes(chatId)){
+      bot.sendMessage(chatId, "Este chat ya está suscripto!");
+    }else{
+      lista.push(chatId);
+      request({url:apis.suscripcionSubte, method:'PUT', json: lista});
+      bot.sendMessage(chatId, "Te suscribiste exitosamente a las notificaciones del subte");
+    }
+  })
+})
+
+bot.onText(/^\/unsuscribesubte(@HinchaBolasBot)?$/, msg => {
+  chatId = msg.chat.id;
+  request.get(apis.suscripcionSubte, function(err, httpResponse, body){
+    var lista = JSON.parse(body);
+    if(lista.includes(chatId)){
+      lista.splice(lista.indexOf(chatId), 1)
+      bot.sendMessage(chatId, "Te borraste exitosamente de las notificaciones del subte");
+      request({url:apis.suscripcionSubte, method:'PUT', json: lista});
+    }else{
+      bot.sendMessage(chatId, "Este chat no está suscripto!");
+    }
+  })
+})
 
 require("./schedule");
