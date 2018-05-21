@@ -416,6 +416,7 @@ bot.onText(/^\/unsubscribesubte(@HinchaBolasBot)?$/, msg => {
 })
 
 bot.onText(/(B|b)uen d(i|í)a/, msg => {
+    if(msg.chat.id === springId){bot.sendMessage(msg.chat.id, "ahora deberia mandar el sticker pero no quiero")};
   bot.sendSticker(msg.chat.id,"CAADAQADCQADlVU3E--Nax_-949JAg")
 })
 
