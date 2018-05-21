@@ -23,12 +23,18 @@ app.get("/", function (req, res){
 
 bot.onText(/^\/hi(@HinchaBolasBot)?$/, (msg) => {
   const chatId = msg.chat.id;
-  if( msg.from.first_name === 'Tobias' || msg.from.first_name === 'Ignacio Javier'){
-    bot.sendMessage(chatId, "Muy buenos días amo  " + msg.from.first_name + ". Cómo puedo ayudarlo hoy?");
-  } else{
-    bot.sendMessage(chatId, "Hola " + msg.from.first_name);
+  switch (msg.from.first_name) {
+    case "Tobias":
+      bot.sendMessage(chatId, "Muy buenos días amo  " + msg.from.first_name + ". Cómo puedo ayudarlo hoy?");
+      break;
+    case "Nadia":
+      bot.sendMessage(chatId, "Qué hay de nuevo Doc?");
+      break;
+    case "Kevin":
+      break;
+    default:
+      bot.sendMessage(chatId, "Hola " + msg.from.first_name)
   }
-
 });
 
 bot.onText(/^\/null(@HinchaBolasBot)?$/, (msg) => {
