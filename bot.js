@@ -415,7 +415,7 @@ bot.onText(/^\/unsubscribesubte(@HinchaBolasBot)?$/, msg => {
   })
 })
 
-bot.onText(/Buen d(i|í)a/, msg => {
+bot.onText(/(B|b)uen d(i|í)a/, msg => {
   bot.sendSticker(msg.chat.id,"CAADAQADCQADlVU3E--Nax_-949JAg")
 })
 
