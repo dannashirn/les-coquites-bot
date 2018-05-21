@@ -419,8 +419,4 @@ bot.onText(/Buen d(i|í)a/, msg => {
   bot.sendSticker(msg.chat.id,"CAADAQADCQADlVU3E--Nax_-949JAg")
 })
 
-bot.on("message", msg => {
-  console.log(msg)
-})
-
 require("./schedule");
