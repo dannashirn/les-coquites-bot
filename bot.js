@@ -342,7 +342,7 @@ bot.onText(/^\/cuandocomemos(@HinchaBolasBot)?$/, msg => {
     if((14 - now) > 0){
     bot.sendMessage(chatId, "Comemos en ".concat(14 - now).concat(":").concat(60 - (new Date()).getMinutes()).concat("horas"));
     }else{
-    bot.sendMessage(chatId, "Comemos en ".concat(60 - (new Date()).getMinutes()).concat("minutos"));
+    bot.sendMessage(chatId, "Comemos en ".concat(60 - (new Date()).getMinutes()).concat(" minutos"));
     }
   }
 })
