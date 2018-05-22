@@ -450,5 +450,9 @@ bot.onText(/qu(e|é) hacemos esta noche\??/i, msg => {
   bot.sendMessage(msg.chat.id, "Lo mismo que hacemos todas las noches " + msg.from.first_name + ", tratar de conquistar al mundo!")
 })
 
+bot.onText(/( facu )|( facultad )/i, msg => {
+  bot.sendMessage(msg.chat.id, "Deja la facultad de una vez " + msg.from.first_name)
+})
+
 
 require("./schedule");
