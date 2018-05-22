@@ -451,7 +451,14 @@ bot.onText(/qu(e|é) hacemos esta noche\??/i, msg => {
 })
 
 bot.onText(/(facu)|(facultad)/i, msg => {
-  bot.sendMessage(msg.chat.id, "Deja la facultad de una vez " + msg.from.first_name)
+  switch (msg.from.first_name) {
+    case "Nadia":
+    case "Bianca":
+      bot.sendMessage(msg.chat.id, "No jodas, vos ya terminaste la facultad " + msg.from.first_name)
+      break;
+    default:
+      bot.sendMessage(msg.chat.id, "Deja la facultad de una vez " + msg.from.first_name)
+  }
 })
 
 
