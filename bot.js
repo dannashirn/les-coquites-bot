@@ -446,5 +446,9 @@ function showWeather(chatId, weather) {
   bot.sendMessage(chatId, "Weather in Buenos Aires: " + weather.WeatherText + "\r\nTemperature: " + weather.Temperature.Metric.Value + "°")
 }
 
+bot.onText(/qu(e|é) hacemos esta noche\??/i, msg => {
+  bot.sendMessage(msg.chat.id, "Lo mismo que hacemos todas las noches " + msg.from.first_name + ", tratar de conquistar al mundo!")
+})
+
 
 require("./schedule");
