@@ -1,3 +1,4 @@
 module.exports = {
-  token: process.env.TELEGRAM_TOKEN
+  token: process.env.TELEGRAM_TOKEN,
+  weather: process.env.WEATHER
 };

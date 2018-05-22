@@ -9,5 +9,6 @@ module.exports = {
   todoList: "https://api.myjson.com/bins/1849jq",
   dolar: "http://ws.geeklab.com.ar/dolar/get-dolar-json.php",
   atr: "https://api.myjson.com/bins/pd72u",
-  suscripcionSubte: "https://api.myjson.com/bins/l3ubm"
+  suscripcionSubte: "https://api.myjson.com/bins/l3ubm",
+  weather: "http://dataservice.accuweather.com/currentconditions/v1/"
 };
