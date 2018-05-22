@@ -6,14 +6,15 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var request = require('request');
-
 var TelegramBot = require('node-telegram-bot-api');
+var zlib = require('zlib');
 var keys = require('./config/keys')
 var token = keys.token;
 var apis = require('./config/apis')
 const ids = require('./config/id')
 var bot = new TelegramBot(token, {polling: true});
 const food = ["mc", "dandy", "office cook", "lupita", "central market", "tu mama", "havanna", "mostaza", "el chino","el italiano"];
+const bsasKey = 7894;
 
 const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 
@@ -424,5 +425,22 @@ bot.onText(/^\/unsubscribesubte(@HinchaBolasBot)?$/, msg => {
 bot.onText(/buen d(í|i)a/i, msg => {
   bot.sendSticker(msg.chat.id,"CAADAQADCQADlVU3E--Nax_-949JAg")
 })
+
+bot.onText(/^\/weather$/, msg => {
+  request({url: apis.weather + bsasKey, qs: {"apikey": keys.weather}}, (err, httpResponse, body) => {
+    if(httpResponse.headers['content-encoding'] == 'gzip'){
+      zlib.gunzip(body, function(err, dezipped) {
+        showWeather(msg.chat.id, JSON.parse(dezipped)[0]);
+      });
+    } else {
+      showWeather(msg.chat.id, JSON.parse(body)[0]);
+  }
+  })
+})
+
+function showWeather(chatId, weather) {
+  bot.sendMessage(chatId, "Weather in Buenos Aires: " + weather.WeatherText + "\r\nTemperature: " + weather.Temperature.Metric.Value + "°")
+}
+
 
 require("./schedule");
