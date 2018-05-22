@@ -10,7 +10,7 @@ module.exports =
 module.exports =
     schedule.scheduleJob("*/3 * * * *", () => {
     request.get(apis.haySubte, function(err, httpResponse, body) {
-      if(httpResponse != 200) {
+      if(httpResponse.statusCode != 200) {
         console.log("Subte API Caida", httpResponse)
         return
       }
