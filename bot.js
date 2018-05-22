@@ -429,7 +429,7 @@ bot.onText(/buen d(í|i)a/i, msg => {
 bot.onText(/^\/weather$/, msg => {
   request({url: apis.weather + bsasKey, qs: {"apikey": keys.weather}}, (err, httpResponse, body) => {
     if(httpResponse.statusCode != 200) {
-      bot.sendMessage(msg.chat.id, "There has been an error:\r\n" + JSON.parse(body).Code)
+      bot.sendMessage(msg.chat.id, "There has been an error:\r\n" + JSON.parse(body).Message)
       return
     }
     if(httpResponse.headers['content-encoding'] == 'gzip'){
