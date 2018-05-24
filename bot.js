@@ -611,6 +611,11 @@ bot.onText(/^\/youtube [0-9a-zA-Z ]*$/, msg => {
       qs: { part: "id", q: q, key: keys.google, maxResults: 1 }
     },
     (err, res, body) => {
+      if (res.statusCode == 403) {
+        bot.sendMessage("Aflojenle un poco muchachos");
+        return;
+      }
+      console.log(res);
       var videoId = JSON.parse(body).items[0].id.videoId;
       bot.sendMessage(
         msg.chat.id,
