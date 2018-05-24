@@ -223,7 +223,7 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
   });
 });
 
-var after = new Date(2018, 4, 24, 17, 30, 0, 0);
+var after = new Date(2018, 4, 24, 20, 30, 0, 0);
 
 bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
@@ -575,7 +575,7 @@ function showWeather(chatId, weather) {
 }
 
 bot.onText(/qu(e|é) hacemos esta noche\??/i, msg => {
-  if (new Date() >= after) {
+  if (new Date().setHours(0,0,0) >= new Date(after.getTime()).setHours(0,0,0)) {
     var suffix = " (despues de agarrarnos un pedo bárbaro en el after)";
   } else {
     var suffix = "";
