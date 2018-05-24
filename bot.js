@@ -615,7 +615,6 @@ bot.onText(/^\/youtube [0-9a-zA-Z ]*$/i, msg => {
         bot.sendMessage("Aflojenle un poco muchachos");
         return;
       }
-      console.log(res);
       var videoId = JSON.parse(body).items[0].id.videoId;
       bot.sendMessage(
         msg.chat.id,
