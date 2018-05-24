@@ -469,7 +469,7 @@ bot.onText(/^\/unchecktodo [0-9]\d?\d?/, msg => {
   });
 });
 
-bot.onText(/^\/atr$/, msg => {
+bot.onText(/^\/atr(@HinchaBolasBot)?$/, msg => {
   request.get(apis.atr, (err, response, body) => {
     var audios = JSON.parse(body);
     bot.sendAudio(
