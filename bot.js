@@ -603,7 +603,7 @@ bot.onText(/(facu)|(facultad)/i, msg => {
   }
 });
 
-bot.onText(/^\/youtube [a-zA-Z ]*$/, msg => {
+bot.onText(/^\/youtube [0-9a-zA-Z ]*$/, msg => {
   var q = msg.text.split("/youtube").pop();
   request.get(
     {
