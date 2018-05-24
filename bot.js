@@ -538,7 +538,7 @@ bot.onText(/buen d(í|i)a/i, msg => {
   bot.sendSticker(msg.chat.id, "CAADAQADCQADlVU3E--Nax_-949JAg");
 });
 
-bot.onText(/^\/weather$/, msg => {
+bot.onText(/^\/weather(@HinchaBolasBot)?$/, msg => {
   request(
     { url: apis.weather + bsasKey, qs: { apikey: keys.weather } },
     (err, httpResponse, body) => {
