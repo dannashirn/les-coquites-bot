@@ -188,6 +188,10 @@ var after = new Date(2018, 4, 24, 3, 0, 0, 0);
 
 bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
+<<<<<<< HEAD
+=======
+  var after = new Date(2018, 4, 25, 3, 0, 0, 0);
+>>>>>>> 2e7cfb0dc04c7ae179b5d4c5625655a88b5a3219
   var today = new Date();
 
   if(after > today){
