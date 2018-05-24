@@ -223,7 +223,7 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
   });
 });
 
-var after = new Date(2018, 4, 25, 3, 0, 0, 0);
+var after = new Date(2018, 4, 24, 17, 30, 0, 0);
 
 bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
@@ -231,9 +231,12 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
 
   if (after > today) {
     if ((after - today) / oneDay < 1) {
+      var remainingTime = new Date(after.getTime() - today.getTime())
+      var hours = remainingTime.getHours();
+      var minutes = remainingTime.getMinutes();
       bot.sendMessage(
         chatId,
-        "Hoy es el after! Un poco de luz entre tanta miseria y oscuridad"
+        "Faltan " + hours + ":" + minutes + " para el after!!!"
       );
     } else if ((after - today) / oneDay < 2) {
       bot.sendMessage(chatId, "El after en Madero es mañana");
