@@ -184,10 +184,10 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
  })
 })
 
+var after = new Date(2018, 4, 24, 3, 0, 0, 0);
 
 bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
-  var after = new Date(2018, 4, 24, 3, 0, 0, 0);
   var today = new Date();
 
   if(after > today){
@@ -447,7 +447,12 @@ function showWeather(chatId, weather) {
 }
 
 bot.onText(/qu(e|é) hacemos esta noche\??/i, msg => {
-  bot.sendMessage(msg.chat.id, "Lo mismo que hacemos todas las noches " + msg.from.first_name + ", tratar de conquistar al mundo!")
+  if(new Date() >= after) {
+    var suffix = " (despues de agarrarnos un pedo bárbaro en el after)"
+  } else {
+    var suffix = ""
+  }
+  bot.sendMessage(msg.chat.id, "Lo mismo que hacemos todas las noches " + msg.from.first_name + ", tratar de conquistar al mundo!" + suffix)
 })
 
 bot.onText(/(facu)|(facultad)/i, msg => {
