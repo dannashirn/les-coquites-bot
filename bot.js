@@ -633,4 +633,11 @@ bot.onText(/^\/lucio(@HinchaBolasBot)?/, msg => {
   bot.sendMessage(chatId, text.toUpperCase());
 })
 
+bot.onText(/^\/chinito(@HinchaBolasBot)?/, msg => {
+  const chatId = msg.chat.id;
+  var text = msg.text.split("/chinito ").pop();
+  bot.sendMessage(chatId, text.replace(/[a|e|o|u]/gi,"i"));
+})
+
+
 require("./schedule");
