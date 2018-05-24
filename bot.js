@@ -603,4 +603,21 @@ bot.onText(/(facu)|(facultad)/i, msg => {
   }
 });
 
+bot.onText(/^\/youtube [a-zA-Z ]*$/, msg => {
+  var q = msg.text.split("/youtube").pop();
+  request.get(
+    {
+      url: apis.youtube,
+      qs: { part: "id", q: q, key: keys.google, maxResults: 1 }
+    },
+    (err, res, body) => {
+      var videoId = JSON.parse(body).items[0].id.videoId;
+      bot.sendMessage(
+        msg.chat.id,
+        "https://www.youtube.com/watch?v=" + videoId
+      );
+    }
+  );
+});
+
 require("./schedule");

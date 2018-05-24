@@ -13,5 +13,6 @@ module.exports = {
   dolar: "http://ws.geeklab.com.ar/dolar/get-dolar-json.php",
   atr: "https://api.myjson.com/bins/pd72u",
   suscripcionSubte: "https://api.myjson.com/bins/l3ubm",
-  weather: "http://dataservice.accuweather.com/currentconditions/v1/"
+  weather: "http://dataservice.accuweather.com/currentconditions/v1/",
+  youtube: "https://www.googleapis.com/youtube/v3/search"
 };
