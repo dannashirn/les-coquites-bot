@@ -59,7 +59,7 @@ bot.onText(/^\/null(@HinchaBolasBot)?$/, msg => {
   bot.sendMessage(chatId, "Null");
 });
 
-bot.onText(/^\/oooh(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/o+h(@HinchaBolasBot)?$/, msg => {
     const chatId = msg.chat.id;
 bot.sendVideo(chatId, "https://media.giphy.com/media/9kPd2Hs4PYASc/giphy.gif");
 });
