@@ -636,12 +636,9 @@ bot.onText(/^\/lucio(@HinchaBolasBot)?/, msg => {
 bot.onText(/^\/chinito(@HinchaBolasBot)?/, msg => {
   const chatId = msg.chat.id;
   var text = msg.text.split("/chinito ").pop();
-  bot.sendMessage(chatId, text.replace(/[a|e|o|u]/gi,"i"));
-})
-
-bot.on('photo', function(msg){
-  console.log(msg);
-  bot.sendMessage(msg.chat.id, msg.photo[0].file_id)
+  bot.sendPhoto(chatId
+    , 'AgADAQADQagxG-7POUQnPExdP2BRKcHnCjAABC_li1PUizOW1mMAAgI'
+    , {caption: text.replace(/[a|á|ä|e|é|ë|o|ó|ö|u|ú|ü]/gi,"i")});
 })
 
 require("./schedule");
