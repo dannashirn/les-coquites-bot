@@ -229,7 +229,7 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
   });
 });
 
-var after = new Date(2018, 4, 24, 20, 30, 0, 0);
+var after = new Date(2018, 6, 26, 20, 30, 0, 0);
 
 bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
@@ -249,7 +249,7 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
     } else {
       bot.sendMessage(
         chatId,
-        "Faltan "
+        "Estimamos que faltan "
           .concat(Math.floor((after - today) / oneDay) + 1)
           .concat(" dias para el proximo after en Madero")
       );
