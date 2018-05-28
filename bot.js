@@ -641,9 +641,7 @@ bot.onText(/^\/chinito(@HinchaBolasBot)?/, msg => {
 
 bot.on('photo', function(msg){
   console.log(msg);
-  bot.sendPhoto(msg.chat.id, msg.photo[0].file_id);
-  bot.sendPhoto(msg.chat.id, msg.photo[1].file_id);
-  bot.sendPhoto(msg.chat.id, msg.photo[2].file_id);
+  bot.sendMessage(msg.chat.id, msg.photo[0].file_id)
 })
 
 require("./schedule");
