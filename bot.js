@@ -537,7 +537,7 @@ bot.onText(/^\/unsubscribesubte(@HinchaBolasBot)?$/, msg => {
   });
 });
 
-bot.onText(/buen d(í|i)a/i, msg => {
+bot.onText(/buen(os)? d(í|i)a(s)?/i, msg => {
   bot.sendSticker(msg.chat.id, "CAADAQADCQADlVU3E--Nax_-949JAg");
 });
 
