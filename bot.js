@@ -39,7 +39,7 @@ bot.onText(/^\/hi(@HinchaBolasBot)?$/, msg => {
     case "Tobias":
       bot.sendMessage(
         chatId,
-        "Muy buenos días amo  " +
+        "Muy buenos días amo " +
           msg.from.first_name +
           ". Cómo puedo ayudarlo hoy?"
       );
@@ -57,6 +57,11 @@ bot.onText(/^\/hi(@HinchaBolasBot)?$/, msg => {
 bot.onText(/^\/null(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, "Null");
+});
+
+bot.onText(/^\/oooh(@HinchaBolasBot)?$/, msg => {
+    const chatId = msg.chat.id;
+bot.sendVideo(chatId, "https://media.giphy.com/media/9kPd2Hs4PYASc/giphy.gif");
 });
 
 bot.onText(/^\/feriados(@HinchaBolasBot)?$/, msg => {
