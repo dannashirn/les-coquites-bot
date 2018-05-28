@@ -90,9 +90,15 @@ bot.onText(/^\/proximoferiado(@HinchaBolasBot)?$/, msg => {
 
 function proximoFeriado(feriados) {
   var today = new Date();
-  return feriados.filter(
-    f => f.mes >= today.getMonth() + 1 && f.dia >= today.getDate()
-  )[0];
+  var proximos = feriados.filter(
+    f => f.mes >= today.getMonth() + 1
+  )
+  if (proximos[0].mes == today.getMonth() + 1 && proximos[0].dia <= today.getDate()) {
+    return proximoFeriado(proximos.slice(1))
+  } else {
+    return proximos[0]
+  }
+  //[0];
 }
 
 function diasHastaFeriado(feriado) {
