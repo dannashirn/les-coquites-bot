@@ -124,7 +124,7 @@ function mostrarFeriadoEnLinea(feriado, mesActual) {
     "dia: " +
     feriado.dia +
     "/" +
-    mesActual
+    feriado.mes
   );
 }
 
