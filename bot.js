@@ -644,12 +644,21 @@ bot.onText(/^\/lucio(@HinchaBolasBot)?/, msg => {
   bot.sendMessage(chatId, text.toUpperCase());
 })
 
+const fotoChinito = 'AgADAQADQagxG-7POUQnPExdP2BRKcHnCjAABC_li1PUizOW1mMAAgI';
 bot.onText(/^\/chinito(@HinchaBolasBot)?/, msg => {
   const chatId = msg.chat.id;
+  if (msg.reply_to_message) {
+    return bot.sendPhoto(chatId, fotoChinito, { caption: achinosar(msg.reply_to_message.text) })
+  }
+
   var text = msg.text.split("/chinito ").pop();
   bot.sendPhoto(chatId
-    , 'AgADAQADQagxG-7POUQnPExdP2BRKcHnCjAABC_li1PUizOW1mMAAgI'
-    , {caption: text.replace(/[a|á|ä|e|é|ë|o|ó|ö|u|ú|ü]/gi,"i")});
+    , fotoChinito
+    , { caption: achinosar(text) });
 })
+
+function achinosar(text) {
+  return text.replace(/[a|á|ä|e|é|ë|o|ó|ö|u|ú|ü]/gi, "i")
+}
 
 require("./schedule");
