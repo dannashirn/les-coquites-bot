@@ -625,6 +625,11 @@ bot.onText(/(facu)|(facultad)/i, msg => {
 
 bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
   var q = msg.text.split("/youtube").pop();
+  if (msg.from.username) {
+    var displayName = msg.from.username;
+  } else {
+    var displayName = msg.from.first_name;
+  }
   request.get(
     {
       url: apis.youtube,
@@ -636,11 +641,11 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
         return;
       }
       var videoId = JSON.parse(body).items[0].id.videoId;
-      bot.deleteMessage(msg.chat.id,msg.message_id)
+      bot.deleteMessage(msg.chat.id, msg.message_id);
       bot.sendMessage(
         msg.chat.id,
         "Aca tenes " +
-          msg.from.username +
+          displayName +
           "\r\n" +
           "https://www.youtube.com/watch?v=" +
           videoId
