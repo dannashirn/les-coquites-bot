@@ -638,7 +638,11 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
       var videoId = JSON.parse(body).items[0].id.videoId;
       bot.sendMessage(
         msg.chat.id,
-        "https://www.youtube.com/watch?v=" + videoId
+        "Aca tenes " +
+          msg.from.first_name +
+          "\r\n" +
+          "https://www.youtube.com/watch?v=" +
+          videoId
       );
     }
   );
