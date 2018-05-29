@@ -639,7 +639,7 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
       bot.sendMessage(
         msg.chat.id,
         "Aca tenes " +
-          msg.from.first_name +
+          msg.from.username +
           "\r\n" +
           "https://www.youtube.com/watch?v=" +
           videoId
