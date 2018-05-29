@@ -636,6 +636,7 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
         return;
       }
       var videoId = JSON.parse(body).items[0].id.videoId;
+      bot.deleteMessage(msg.chat.id,msg.id)
       bot.sendMessage(
         msg.chat.id,
         "Aca tenes " +
