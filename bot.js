@@ -60,8 +60,11 @@ bot.onText(/^\/null(@HinchaBolasBot)?$/, msg => {
 });
 
 bot.onText(/^\/o+h+(@HinchaBolasBot)?$/, msg => {
-    const chatId = msg.chat.id;
-bot.sendVideo(chatId, "https://media.giphy.com/media/9kPd2Hs4PYASc/giphy.gif");
+  const chatId = msg.chat.id;
+  bot.sendVideo(
+    chatId,
+    "https://media.giphy.com/media/9kPd2Hs4PYASc/giphy.gif"
+  );
 });
 
 bot.onText(/^\/feriados(@HinchaBolasBot)?$/, msg => {
@@ -95,13 +98,14 @@ bot.onText(/^\/proximoferiado(@HinchaBolasBot)?$/, msg => {
 
 function proximoFeriado(feriados) {
   var today = new Date();
-  var proximos = feriados.filter(
-    f => f.mes >= today.getMonth() + 1
-  )
-  if (proximos[0].mes == today.getMonth() + 1 && proximos[0].dia <= today.getDate()) {
-    return proximoFeriado(proximos.slice(1))
+  var proximos = feriados.filter(f => f.mes >= today.getMonth() + 1);
+  if (
+    proximos[0].mes == today.getMonth() + 1 &&
+    proximos[0].dia <= today.getDate()
+  ) {
+    return proximoFeriado(proximos.slice(1));
   } else {
-    return proximos[0]
+    return proximos[0];
   }
   //[0];
 }
@@ -242,7 +246,7 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
 
   if (after > today) {
     if ((after - today) / oneDay < 1) {
-      var remainingTime = new Date(after.getTime() - today.getTime())
+      var remainingTime = new Date(after.getTime() - today.getTime());
       var hours = remainingTime.getHours();
       var minutes = remainingTime.getMinutes();
       bot.sendMessage(
@@ -586,7 +590,9 @@ function showWeather(chatId, weather) {
 }
 
 bot.onText(/qu(e|é) hacemos esta noche\??/i, msg => {
-  if (new Date().setHours(0,0,0) >= new Date(after.getTime()).setHours(0,0,0)) {
+  if (
+    new Date().setHours(0, 0, 0) >= new Date(after.getTime()).setHours(0, 0, 0)
+  ) {
     var suffix = " (despues de agarrarnos un pedo bárbaro en el after)";
   } else {
     var suffix = "";
@@ -619,6 +625,11 @@ bot.onText(/(facu)|(facultad)/i, msg => {
 
 bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
   var q = msg.text.split("/youtube").pop();
+  if (msg.from.username) {
+    var displayName = msg.from.username;
+  } else {
+    var displayName = msg.from.first_name;
+  }
   request.get(
     {
       url: apis.youtube,
@@ -630,9 +641,14 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
         return;
       }
       var videoId = JSON.parse(body).items[0].id.videoId;
+      bot.deleteMessage(msg.chat.id, msg.message_id);
       bot.sendMessage(
         msg.chat.id,
-        "https://www.youtube.com/watch?v=" + videoId
+        "Aca tenes " +
+          displayName +
+          "\r\n" +
+          "https://www.youtube.com/watch?v=" +
+          videoId
       );
     }
   );
@@ -642,15 +658,24 @@ bot.onText(/^\/lucio(@HinchaBolasBot)?/, msg => {
   const chatId = msg.chat.id;
   var text = msg.text.split("/lucio ").pop();
   bot.sendMessage(chatId, text.toUpperCase());
-})
+});
 
+const fotoChinito = "AgADAQADQagxG-7POUQnPExdP2BRKcHnCjAABC_li1PUizOW1mMAAgI";
 bot.onText(/^\/chinito(@HinchaBolasBot)?/, msg => {
   const chatId = msg.chat.id;
+  if (msg.reply_to_message) {
+    return bot.sendPhoto(chatId, fotoChinito, {
+      caption: achinosar(msg.reply_to_message.text)
+    });
+  }
+
   var text = msg.text.split("/chinito ").pop();
-  bot.sendPhoto(chatId
-    , 'AgADAQADQagxG-7POUQnPExdP2BRKcHnCjAABC_li1PUizOW1mMAAgI'
-    , {caption: text.replace(/[a|á|ä|e|é|ë|o|ó|ö|u|ú|ü]/gi,"i")});
-})
+  bot.sendPhoto(chatId, fotoChinito, { caption: achinosar(text) });
+});
+
+function achinosar(text) {
+  return text.replace(/[a|á|ä|e|é|ë|o|ó|ö|u|ú|ü]/gi, "i");
+}
 
 bot.onText(/^\/myip(@HinchaBolasBot)?$/, msg => {
   request.get(apis.jsonip, function(err, httpResponse, body) {
