@@ -677,11 +677,4 @@ function achinosar(text) {
   return text.replace(/[a|á|ä|e|é|ë|o|ó|ö|u|ú|ü]/gi, "i");
 }
 
-bot.onText(/^\/myip(@HinchaBolasBot)?$/, msg => {
-  request.get(apis.jsonip, function(err, httpResponse, body) {
-    var data = JSON.parse(body);
-    bot.sendMessage(msg.chat.id, "your actual ip is: "+ data.ip);
-  });
-});
-
 require("./schedule");
