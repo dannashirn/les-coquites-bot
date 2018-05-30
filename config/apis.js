@@ -14,5 +14,6 @@ module.exports = {
   atr: "https://api.myjson.com/bins/pd72u",
   suscripcionSubte: "https://api.myjson.com/bins/l3ubm",
   weather: "http://dataservice.accuweather.com/currentconditions/v1/",
-  youtube: "https://www.googleapis.com/youtube/v3/search"
+  youtube: "https://www.googleapis.com/youtube/v3/search",
+  jsonip: "https://jsonip.com/"
 };
