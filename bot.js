@@ -678,7 +678,7 @@ function achinosar(text) {
 }
 
 bot.onText(/^\/papu/, msg => {
-  bot.sendSticker(msg.chat.id, "CAADAQADOwADI-2ARDxmOGfjL808Ag")
+  bot.sendSticker(msg.chat.id, "CAADAQADjAAD_naARBNa1K0wqBprAg")
 })
 
 
