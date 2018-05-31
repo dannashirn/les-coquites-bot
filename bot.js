@@ -677,4 +677,13 @@ function achinosar(text) {
   return text.replace(/[a|á|ä|e|é|ë|o|ó|ö|u|ú|ü]/gi, "i");
 }
 
+bot.onText(/^\/papu/, msg => {
+  bot.sendSticker(msg.chat.id, "CAADAQADOwADI-2ARDxmOGfjL808Ag")
+})
+
+
+bot.on("sticker", msg => {
+  console.log("Sticker: " + msg.sticker.file_id)
+})
+
 require("./schedule");
