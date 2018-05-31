@@ -44,6 +44,9 @@ bot.onText(/^\/hi(@HinchaBolasBot)?$/, msg => {
           ". Cómo puedo ayudarlo hoy?"
       );
       break;
+    case "Coca":
+      bot.sendMessage(chatId, "Buen dia Coca, como andan tus hijitos?");
+      break;
     case "Nadia":
       bot.sendMessage(chatId, "Qué hay de nuevo Doc?");
       break;
