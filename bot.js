@@ -66,7 +66,7 @@ bot.onText(/^\/o+h+(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
   bot.sendVideo(
     chatId,
-    "https://media.giphy.com/media/9kPd2Hs4PYASc/giphy.gif"
+    "https://media.giphy.com/media/AT6LbRAazEoPm/giphy.gif"
   );
 });
 
