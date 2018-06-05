@@ -35,6 +35,7 @@ app.get("/", function(req, res) {
 
 bot.onText(/^\/hi(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
+  console.log(chatId);
   switch (msg.from.first_name) {
     case "Tobias":
       bot.sendMessage(
@@ -51,6 +52,7 @@ bot.onText(/^\/hi(@HinchaBolasBot)?$/, msg => {
       bot.sendMessage(chatId, "Qué hay de nuevo Doc?");
       break;
     case "Kevin":
+      bot.sendMessage(chatId, "Hoolaa, mi amor!");
       break;
     default:
       bot.sendMessage(chatId, "Hola " + msg.from.first_name);
