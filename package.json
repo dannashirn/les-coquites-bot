@@ -1,7 +1,7 @@
 {
   "name": "BotTelegram",
   "version": "0.0.1",
-  "description": "BotTelegram",
+  "description": "Bot Telegram",
   "private": true,
   "scripts": {
     "start": "node bot.js"
