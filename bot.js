@@ -3,7 +3,10 @@ const lunchId = -182762392;
 
 ("use strict");
 var express = require("express");
+var bodyParser = require('body-parser')
 var app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 var http = require("http").Server(app);
 var request = require("request");
 var TelegramBot = require("node-telegram-bot-api");
@@ -33,8 +36,18 @@ app.get("/", function(req, res) {
   res.send("OK");
 });
 
+app.post("/msg", function(req, res) {
+  if(req.body.group === "1"){
+    bot.sendMessage(lunchId, req.body.msg);
+  }else{
+    bot.sendMessage(springId, req.body.msg);
+  }
+  res.send("OK MSG");
+});
+
 bot.onText(/^\/hi(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
+  console.log(chatId);
   switch (msg.from.first_name) {
     case "Tobias":
       bot.sendMessage(

@@ -1,12 +1,13 @@
 {
-  "name": "chat",
+  "name": "BotTelegram",
   "version": "0.0.1",
-  "description": "my first socket.io chat",
+  "description": "BotTelegram",
   "private": true,
   "scripts": {
     "start": "node bot.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.15.2",
     "node-schedule": "^1.3.0",
     "node-telegram-bot-api": "^0.30.0",
