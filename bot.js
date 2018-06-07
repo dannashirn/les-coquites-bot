@@ -3,10 +3,10 @@ const lunchId = -182762392;
 
 ("use strict");
 var express = require("express");
-var bodyParser = require('body-parser')
+var bodyParser = require("body-parser");
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 var http = require("http").Server(app);
 var request = require("request");
 var TelegramBot = require("node-telegram-bot-api");
@@ -30,6 +30,8 @@ const food = [
 ];
 const bsasKey = 7894;
 
+const tobiIsSad = "DQADAQADSgADkP7QRETydrO6imHbAg";
+
 const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 
 app.get("/", function(req, res) {
@@ -37,9 +39,9 @@ app.get("/", function(req, res) {
 });
 
 app.post("/msg", function(req, res) {
-  if(req.body.group === "1"){
+  if (req.body.group === "1") {
     bot.sendMessage(lunchId, req.body.msg);
-  }else{
+  } else {
     bot.sendMessage(springId, req.body.msg);
   }
   res.send("OK MSG");
@@ -642,9 +644,12 @@ bot.onText(/(facu)|(facultad)/i, msg => {
 
 bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
   var q = msg.text.split("/youtube").pop();
-  if(msg.from.id === 483545548) {
-    bot.sendMessage(msg.chat.id,"Estamos en harvard chicos, no estamos en la matanza")
-    return
+  if (msg.from.id === 483545548) {
+    bot.sendMessage(
+      msg.chat.id,
+      "Estamos en harvard chicos, no estamos en la matanza"
+    );
+    return;
   }
 
   if (msg.from.username) {
@@ -700,12 +705,15 @@ function achinosar(text) {
 }
 
 bot.onText(/^\/papu/, msg => {
-  bot.sendSticker(msg.chat.id, "CAADAQADjAAD_naARBNa1K0wqBprAg")
-})
-
+  bot.sendSticker(msg.chat.id, "CAADAQADjAAD_naARBNa1K0wqBprAg");
+});
 
 bot.on("sticker", msg => {
-  console.log("Sticker: " + msg.sticker.file_id)
-})
+  console.log("Sticker: " + msg.sticker.file_id);
+});
+
+bot.onText(/^\/killme(@HinchaBolasBot)?$/, msg => {
+  bot.sendVideoNote(msg.chat.id, tobiIsSad);
+});
 
 require("./schedule");
