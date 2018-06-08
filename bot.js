@@ -644,14 +644,6 @@ bot.onText(/(facu)|(facultad)/i, msg => {
 
 bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
   var q = msg.text.split("/youtube").pop();
-  if (msg.from.id === 483545548) {
-    bot.sendMessage(
-      msg.chat.id,
-      "Estamos en harvard chicos, no estamos en la matanza"
-    );
-    return;
-  }
-
   if (msg.from.username) {
     var displayName = msg.from.username;
   } else {
