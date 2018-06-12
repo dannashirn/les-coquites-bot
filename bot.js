@@ -642,7 +642,7 @@ bot.onText(/(facu)|(facultad)/i, msg => {
   }
 });
 
-bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
+bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Zñáéíóúü ]*$/i, msg => {
   var q = msg.text.split("/youtube").pop();
   if (msg.from.username) {
     var displayName = msg.from.username;
@@ -660,7 +660,7 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Z ]*$/i, msg => {
         return;
       }
       var videoId = JSON.parse(body).items[0].id.videoId;
-      bot.deleteMessage(msg.chat.id, msg.message_id);
+        bot.deleteMessage(msg.chat.id, msg.message_id).catch(err =>{});
       bot.sendMessage(
         msg.chat.id,
         "Aca tenes " +
