@@ -1,6 +1,7 @@
 const springId = -240939754;
 const lunchId = -182762392;
-
+var moment = require('moment');
+moment().format();
 ("use strict");
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -707,5 +708,17 @@ bot.on("sticker", msg => {
 bot.onText(/^\/killme(@HinchaBolasBot)?$/, msg => {
   bot.sendVideoNote(msg.chat.id, tobiIsSad);
 });
+
+bot.onText(/^\/quienjuegahoy(@HinchaBolasBot)??/, msg=> {
+  request.get(apis.mundialHoy, (err, res, body) => {
+    var matches = JSON.parse(body)
+    bot.sendMessage(msg.chat.id, matches.map(showMatch).join("\r\n"))
+  })
+})
+
+function showMatch(match) {
+  var myMoment = moment(match.datetime).format("HH:mm (ZZ)")
+  return match.home_team.country + " - " + match.away_team.country + ": " + myMoment
+}
 
 require("./schedule");
