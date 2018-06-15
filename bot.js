@@ -39,15 +39,6 @@ app.get("/", function(req, res) {
   res.send("OK");
 });
 
-app.post("/msg", function(req, res) {
-  if (req.body.group === "1") {
-    bot.sendMessage(lunchId, req.body.msg);
-  } else {
-    bot.sendMessage(springId, req.body.msg);
-  }
-  res.send("OK MSG");
-});
-
 bot.onText(/^\/hi(@HinchaBolasBot)?$/, msg => {
   const chatId = msg.chat.id;
   console.log(chatId);
@@ -709,7 +700,7 @@ bot.onText(/^\/killme(@HinchaBolasBot)?$/, msg => {
   bot.sendVideoNote(msg.chat.id, tobiIsSad);
 });
 
-bot.onText(/^\/quienjuegahoy(@HinchaBolasBot)??/, msg=> {
+bot.onText(/^\/quienjuegahoy(@HinchaBolasBot)?$/, msg=> {
   request.get(apis.mundialHoy, (err, res, body) => {
     var matches = JSON.parse(body)
     bot.sendMessage(msg.chat.id, matches.map(showMatch).join("\r\n"))
