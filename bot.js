@@ -1,5 +1,3 @@
-const springId = -240939754;
-const lunchId = -182762392;
 var moment = require('moment');
 moment().format();
 ("use strict");
@@ -31,7 +29,7 @@ const food = [
 ];
 const bsasKey = 7894;
 
-const tobiIsSad = "DQADAQADSgADkP7QRETydrO6imHbAg";
+const tobiIsSad = "DQADAQADSgADkP7QRKT2myzp1DPoAg";
 
 const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 
