@@ -39,7 +39,11 @@ app.get("/", function(req, res) {
   res.send("OK");
 });
 
-bot.onText(/^\/hi(@HinchaBolasBot)?$/, msg => {
+bot.on("message", msg => {
+  console.log(msg)
+})
+
+bot.onText(/^\/hi(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
   console.log(chatId);
   switch (msg.from.first_name) {
@@ -65,12 +69,12 @@ bot.onText(/^\/hi(@HinchaBolasBot)?$/, msg => {
   }
 });
 
-bot.onText(/^\/null(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/null(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, "Null");
 });
 
-bot.onText(/^\/o+h+(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/o+h+(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
   bot.sendVideo(
     chatId,
@@ -78,7 +82,7 @@ bot.onText(/^\/o+h+(@HinchaBolasBot)?$/, msg => {
   );
 });
 
-bot.onText(/^\/feriados(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/feriados(@LesCoquitesBot)?$/, msg => {
   var mesActual = new Date().getMonth() + 1;
   request.get(apis.feriadosApi, function(err, httpResponse, body) {
     var feriados = JSON.parse(body);
@@ -90,7 +94,7 @@ bot.onText(/^\/feriados(@HinchaBolasBot)?$/, msg => {
   });
 });
 
-bot.onText(/^\/proximoferiado(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/proximoferiado(@LesCoquitesBot)?$/, msg => {
   var mesActual = new Date().getMonth() + 1;
   request.get(apis.feriadosApi, function(err, httpResponse, body) {
     var feriados = JSON.parse(body);
@@ -148,14 +152,14 @@ function mostrarFeriadoEnLinea(feriado, mesActual) {
   );
 }
 
-bot.onText(/^\/btc(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/btc(@LesCoquitesBot)?$/, msg => {
   request.get(apis.btcAPI, function(err, httpResponse, body) {
     var btc = JSON.parse(body);
     bot.sendMessage(msg.chat.id, "$" + btc.data.quotes.USD.price);
   });
 });
 
-bot.onText(/^\/nasa(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/nasa(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
   request.get(apis.nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body);
@@ -163,7 +167,7 @@ bot.onText(/^\/nasa(@HinchaBolasBot)?$/, msg => {
   });
 });
 
-bot.onText(/^\/nasatext(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/nasatext(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
   request.get(apis.nasaAPI, function(err, httpResponse, body) {
     var nasa = JSON.parse(body);
@@ -172,7 +176,7 @@ bot.onText(/^\/nasatext(@HinchaBolasBot)?$/, msg => {
   });
 });
 
-bot.onText(/^\/subte(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/subte(@LesCoquitesBot)?$/, msg => {
   request.get(apis.subtePersistido, function(err, httpResponse, body) {
     var estados = JSON.parse(body);
     var showableStatuses = showStatus(estados);
@@ -205,7 +209,7 @@ http.listen(port, function() {
   console.log("listening on *:" + port);
 });
 
-bot.onText(/^\/juevesdecubalibre(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/juevesdecubalibre(@LesCoquitesBot)?$/, msg => {
   var days = (11 - new Date().getDay()) % 7;
   var showable = showDiasHastaJuevesDeCubaLibre(days);
   bot.sendMessage(msg.chat.id, showable);
@@ -251,7 +255,7 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
 
 var after = new Date(2018, 6, 26, 20, 30, 0, 0);
 
-bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/proximoafter(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
   var today = new Date();
 
@@ -282,7 +286,7 @@ bot.onText(/^\/proximoafter(@HinchaBolasBot)?$/, msg => {
   }
 });
 
-bot.onText(/^\/libertad(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/libertad(@LesCoquitesBot)?$/, msg => {
   var now = new Date();
   var today = now.getDay();
   var chatId = msg.chat.id;
@@ -311,14 +315,14 @@ bot.onText(/^\/libertad(@HinchaBolasBot)?$/, msg => {
   }
 });
 
-bot.onText(/^\/chucknorris(@HinchaBolasBot)?/, msg => {
+bot.onText(/^\/chucknorris(@LesCoquitesBot)?/, msg => {
   request.get(apis.chuckNorris, (err, httpResponse, body) => {
     var joke = JSON.parse(body);
     bot.sendMessage(msg.chat.id, joke.value);
   });
 });
 
-bot.onText(/^\/sugerencia(@HinchaBolasBot)?/, msg => {
+bot.onText(/^\/sugerencia(@LesCoquitesBot)?/, msg => {
   var sugerencia = msg.text.split("/sugerencia ").pop();
   bot.sendMessage(
     msg.chat.id,
@@ -344,7 +348,7 @@ bot.onText(/^\/random [\d]+-[\d]+$/, msg => {
   }
 });
 
-bot.onText(/^\/dondecomemos(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/dondecomemos(@LesCoquitesBot)?$/, msg => {
   var randomNumber = Math.floor(Math.random() * food.length);
   bot.sendMessage(msg.chat.id, "Hoy comemos en " + food[randomNumber] + "!");
 });
@@ -418,7 +422,7 @@ function mostrarTareaEnLinea(tarea, index) {
   return index + " | " + tarea.state + " | " + tarea.text;
 }
 
-bot.onText(/^\/cleanchecked(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/cleanchecked(@LesCoquitesBot)?$/, msg => {
   request.get(apis.todoList, function(err, httpResponse, body) {
     var todoList = JSON.parse(body);
     todoList = todoList.filter(elem => elem.state === "☓");
@@ -429,7 +433,7 @@ bot.onText(/^\/cleanchecked(@HinchaBolasBot)?$/, msg => {
   });
 });
 
-bot.onText(/^\/dolar(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/dolar(@LesCoquitesBot)?$/, msg => {
   var chatId = msg.chat.id;
   request.get(apis.dolar, function(err, httpResponse, body) {
     var dolar = JSON.parse(body);
@@ -443,7 +447,7 @@ bot.onText(/^\/dolar(@HinchaBolasBot)?$/, msg => {
   });
 });
 
-bot.onText(/^\/cuandocomemos(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/cuandocomemos(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
   var now = new Date().getHours();
   if (now === 15) {
@@ -498,7 +502,7 @@ bot.onText(/^\/unchecktodo [0-9]\d?\d?/, msg => {
   });
 });
 
-bot.onText(/^\/atr(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/atr(@LesCoquitesBot)?$/, msg => {
   request.get(apis.atr, (err, response, body) => {
     var audios = JSON.parse(body);
     bot.sendAudio(
@@ -529,7 +533,7 @@ module.exports = {
   }
 };
 
-bot.onText(/^\/subscribesubte(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/subscribesubte(@LesCoquitesBot)?$/, msg => {
   chatId = msg.chat.id;
   request.get(apis.suscripcionSubte, function(err, httpResponse, body) {
     var lista = JSON.parse(body);
@@ -546,7 +550,7 @@ bot.onText(/^\/subscribesubte(@HinchaBolasBot)?$/, msg => {
   });
 });
 
-bot.onText(/^\/unsubscribesubte(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/unsubscribesubte(@LesCoquitesBot)?$/, msg => {
   chatId = msg.chat.id;
   request.get(apis.suscripcionSubte, function(err, httpResponse, body) {
     var lista = JSON.parse(body);
@@ -567,7 +571,7 @@ bot.onText(/buen(os)? d(í|i)a(s)?/i, msg => {
   bot.sendSticker(msg.chat.id, "CAADAQADCQADlVU3E--Nax_-949JAg");
 });
 
-bot.onText(/^\/weather(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/weather(@LesCoquitesBot)?$/, msg => {
   request(
     { url: apis.weather + bsasKey, qs: { apikey: keys.weather } },
     (err, httpResponse, body) => {
@@ -665,14 +669,14 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Zñáéíóúü ]*$/i, msg => {
   );
 });
 
-bot.onText(/^\/lucio(@HinchaBolasBot)?/, msg => {
+bot.onText(/^\/lucio(@LesCoquitesBot)?/, msg => {
   const chatId = msg.chat.id;
   var text = msg.text.split("/lucio ").pop();
   bot.sendMessage(chatId, text.toUpperCase());
 });
 
 const fotoChinito = "AgADAQADQagxG-7POUQnPExdP2BRKcHnCjAABC_li1PUizOW1mMAAgI";
-bot.onText(/^\/chinito(@HinchaBolasBot)?/, msg => {
+bot.onText(/^\/chinito(@LesCoquitesBot)?/, msg => {
   const chatId = msg.chat.id;
   if (msg.reply_to_message) {
     return bot.sendPhoto(chatId, fotoChinito, {
@@ -696,11 +700,11 @@ bot.on("sticker", msg => {
   console.log("Sticker: " + msg.sticker.file_id);
 });
 
-bot.onText(/^\/killme(@HinchaBolasBot)?$/, msg => {
+bot.onText(/^\/killme(@LesCoquitesBot)?$/, msg => {
   bot.sendVideoNote(msg.chat.id, tobiIsSad);
 });
 
-bot.onText(/^\/quienjuegahoy(@HinchaBolasBot)?$/, msg=> {
+bot.onText(/^\/quienjuegahoy(@LesCoquitesBot)?$/, msg=> {
   request.get(apis.mundialHoy, (err, res, body) => {
     var matches = JSON.parse(body)
     bot.sendMessage(msg.chat.id, matches.map(showMatch).join("\r\n"))
