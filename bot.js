@@ -251,7 +251,7 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
   });
 });
 
-var after = new Date(2018, 6, 26, 20, 30, 0, 0);
+var after = new Date(2018, 7, 23, 20, 30, 0, 0);
 
 bot.onText(/^\/proximoafter(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
