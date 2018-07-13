@@ -1,4 +1,4 @@
-var moment = require('moment');
+var moment = require("moment");
 moment().format();
 ("use strict");
 var express = require("express");
@@ -15,6 +15,7 @@ var token = keys.token;
 var apis = require("./config/apis");
 const ids = require("./config/id");
 var bot = new TelegramBot(token, { polling: true });
+const GoogleSpreadsheet = require("google-spreadsheet");
 const food = [
   "mc",
   "dandy",
@@ -28,7 +29,7 @@ const food = [
   "el italiano"
 ];
 const bsasKey = 7894;
-
+const poroteoSheet = "1mOiTT3JIdQPxVLTQ-a3OivQqE15oLvdWMv6I_DpMZak";
 const tobiIsSad = "DQADAQADSgADkP7QRKT2myzp1DPoAg";
 
 const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
@@ -36,10 +37,6 @@ const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 app.get("/", function(req, res) {
   res.send("OK");
 });
-
-bot.on("message", msg => {
-  console.log(msg)
-})
 
 bot.onText(/^\/hi(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
@@ -191,15 +188,8 @@ function showStatus(estados) {
   return showable.join("\r\n");
 }
 
-// bot.on('message', (msg) => {
-//   const chatId = msg.chat.id;
-//
-//   // send a message to the chat acknowledging receipt of their message
-//   bot.sendMessage(chatId, 'Received your message');
-// });
-
 bot.on("new_chat_participant", function(msg) {
-  bot.sendMessage(chatId, "Bienvenido " + msg.from.first_name);
+  bot.sendMessage(msg.chat.id, "Bienvenido " + msg.from.first_name);
 });
 
 var port = process.env.PORT || 3000;
@@ -654,7 +644,7 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Zñáéíóúü ]*$/i, msg => {
         return;
       }
       var videoId = JSON.parse(body).items[0].id.videoId;
-        bot.deleteMessage(msg.chat.id, msg.message_id).catch(err =>{});
+      bot.deleteMessage(msg.chat.id, msg.message_id).catch(err => {});
       bot.sendMessage(
         msg.chat.id,
         "Aca tenes " +
@@ -702,16 +692,64 @@ bot.onText(/^\/killme(@LesCoquitesBot)?$/, msg => {
   bot.sendVideoNote(msg.chat.id, tobiIsSad);
 });
 
-bot.onText(/^\/quienjuegahoy(@LesCoquitesBot)?$/, msg=> {
-  request.get(apis.mundialHoy, (err, res, body) => {
-    var matches = JSON.parse(body)
-    bot.sendMessage(msg.chat.id, matches.map(showMatch).join("\r\n"))
-  })
-})
+var poroteo = new GoogleSpreadsheet(poroteoSheet);
 
-function showMatch(match) {
-  var myMoment = moment(match.datetime).format("HH:mm (ZZ)")
-  return match.home_team.country + " - " + match.away_team.country + ": " + myMoment
+const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
+bot.onText(/^\/poroteo(@LesCoquitesBot)?$/, msg => {
+  poroteo.useServiceAccountAuth(caquita, googleToken => {
+    // poroteo.setAuthToken(googleToken);
+    poroteo.getCells(
+      1,
+      {
+        "min-row": 14,
+        "max-row": 14,
+        "min-col": 4,
+        "max-col": 7,
+        "return-empty": true
+      },
+      (err, cells) => {
+        if (err) {
+          bot.sendMessage(
+            msg.chat.id,
+            "Error al acceder a la planilla, contactese con el administrador"
+          );
+          return;
+        }
+        var votes = {
+          for: cells[0].value,
+          against: cells[1].value,
+          unconfirmed: cells[2].value,
+          abstention: cells[3].value
+        };
+        bot.sendMessage(msg.chat.id, showVotes(votes));
+      }
+    );
+  });
+});
+
+function showVotes(votes) {
+  return "A favor: " +
+    votes.for +
+    "\nEn contra: " +
+    votes.against +
+    "\nIndeciso: " +
+    votes.unconfirmed +
+    "\nAbstencion: " +
+    votes.abstention;
 }
 
 require("./schedule");
+
+var caquita = {
+  type: "service_account",
+  project_id: "hincha-bolas-bot",
+  private_key_id: "e2f647cb75217bc5b5c7490ee753972c30f06de6",
+  private_key: keys.serviceKey,
+  client_email: "bot-655@hincha-bolas-bot.iam.gserviceaccount.com",
+  client_id: "105447702251730977405",
+  auth_uri: "https://accounts.google.com/o/oauth2/auth",
+  token_uri: "https://accounts.google.com/o/oauth2/token",
+  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+  client_x509_cert_url:
+    "https://www.googleapis.com/robot/v1/metadata/x509/bot-655%40hincha-bolas-bot.iam.gserviceaccount.com"
+};

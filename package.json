@@ -9,6 +9,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.15.2",
+    "google-spreadsheet": "^2.0.5",
     "moment": "^2.22.2",
     "node-schedule": "^1.3.0",
     "node-telegram-bot-api": "^0.30.0",
