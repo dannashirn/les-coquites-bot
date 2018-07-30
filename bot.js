@@ -668,10 +668,10 @@ bot.onText(/^\/chinito(@LesCoquitesBot)?/, msg => {
   bot.sendSticker(chatId, "CAADAQADMQAD8Pe7Aj5g8hWbOkDRAg");
   if (msg.reply_to_message) {
     bot.sendMessage(chatId, achinosar(msg.reply_to_message.text))
-  };
-
-  var text = msg.text.split("/chinito ").pop();
-  bot.sendMessage(chatId, achinosar(text));
+  }else{
+    var text = msg.text.split("/chinito ").pop();
+    bot.sendMessage(chatId, achinosar(text));
+  }
 });
 
 function achinosar(text) {
