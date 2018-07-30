@@ -663,17 +663,15 @@ bot.onText(/^\/lucio(@LesCoquitesBot)?/, msg => {
   bot.sendMessage(chatId, text.toUpperCase());
 });
 
-const fotoChinito = "AgADAQADQagxG-7POUQnPExdP2BRKcHnCjAABC_li1PUizOW1mMAAgI";
 bot.onText(/^\/chinito(@LesCoquitesBot)?/, msg => {
   const chatId = msg.chat.id;
+  bot.sendSticker(chatId, "CAADAQADMQAD8Pe7Aj5g8hWbOkDRAg");
   if (msg.reply_to_message) {
-    return bot.sendPhoto(chatId, fotoChinito, {
-      caption: achinosar(msg.reply_to_message.text)
-    });
-  }
+    bot.sendMessage(chatId, achinosar(msg.reply_to_message.text))
+  };
 
   var text = msg.text.split("/chinito ").pop();
-  bot.sendPhoto(chatId, fotoChinito, { caption: achinosar(text) });
+  bot.sendMessage(chatId, achinosar(text));
 });
 
 function achinosar(text) {
