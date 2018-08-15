@@ -683,6 +683,7 @@ bot.onText(/^\/papu/, msg => {
 });
 
 bot.on("sticker", msg => {
+  bot.sendMessage(msg.chat.id, msg.sticker.file_id);
   console.log("Sticker: " + msg.sticker.file_id);
 });
 
