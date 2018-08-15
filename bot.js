@@ -679,7 +679,7 @@ function achinosar(text) {
 }
 
 bot.onText(/^\/papu/, msg => {
-  bot.sendSticker(msg.chat.id, "CAADAQADjAAD_naARBNa1K0wqBprAg");
+  bot.sendSticker(msg.chat.id, "CAADAQADjAAD_naARH5-bQMBdNsEAg");
 });
 
 bot.on("sticker", msg => {
