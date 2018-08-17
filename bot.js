@@ -261,7 +261,7 @@ bot.onText(/^\/proximoafter(@LesCoquitesBot)?$/, msg => {
     } else {
       bot.sendMessage(
         chatId,
-        "Estimamos que faltan "
+        "Faltan "
           .concat(Math.floor((after - today) / oneDay) + 1)
           .concat(" dias para el proximo after en Madero")
       );
