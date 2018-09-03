@@ -423,14 +423,14 @@ bot.onText(/^\/cleanchecked(@LesCoquitesBot)?$/, msg => {
 
 bot.onText(/^\/dolar(@LesCoquitesBot)?$/, msg => {
   var chatId = msg.chat.id;
-  request.get(apis.dolar, function(err, httpResponse, body) {
+  request.get(apis.nuevoDolar, function(err, httpResponse, body) {
     var dolar = JSON.parse(body);
     bot.sendMessage(
       chatId,
       "El dolar libre está $"
-        .concat(dolar.libre)
+        .concat(dolar.items[0].compra).concat("/$").concat(dolar.items[0].venta)
         .concat(" y el blue $")
-        .concat(dolar.blue)
+        .concat(dolar.items[1].compra).concat("/$").concat(dolar.items[1].venta)
     );
   });
 });

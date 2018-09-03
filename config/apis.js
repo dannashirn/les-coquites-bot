@@ -15,5 +15,6 @@ module.exports = {
   suscripcionSubte: "https://api.myjson.com/bins/l3ubm",
   weather: "http://dataservice.accuweather.com/currentconditions/v1/",
   youtube: "https://www.googleapis.com/youtube/v3/search",
-  mundialHoy: "http://worldcup.sfg.io/matches/today"
+  mundialHoy: "http://worldcup.sfg.io/matches/today",
+  nuevoDolar: "https://s3.amazonaws.com/status-coins/nums.json"
 };
