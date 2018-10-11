@@ -675,7 +675,7 @@ bot.onText(/^\/chinito(@LesCoquitesBot)?/, msg => {
 });
 
 function achinosar(text) {
-  return text.replace(/[a|á|ä|e|é|ë|o|ó|ö|u|ú|ü]/gi, "i");
+  return text.toLowerCase().replace(/[a|á|ä|e|é|ë|o|ó|ö|u|ú|ü]/g, "i").replace(/ci/g, "ki");
 }
 
 bot.onText(/^\/papu/, msg => {
