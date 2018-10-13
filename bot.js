@@ -686,6 +686,11 @@ bot.on("sticker", msg => {
   console.log("Sticker: " + msg.sticker.file_id);
 });
 
+bot.on("audio", msg =>{
+  bot.sendMessage(msg.chat.id, msg.audio.file_id);
+  console.log("Audio: ", msg.audio.file_id);
+})
+
 bot.onText(/^\/killme(@LesCoquitesBot)?$/, msg => {
   bot.sendVideoNote(msg.chat.id, tobiIsSad);
 });
