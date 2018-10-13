@@ -691,6 +691,11 @@ bot.on("audio", msg =>{
   console.log("Audio: ", msg.audio.file_id);
 })
 
+bot.on("voice", msg =>{
+  bot.sendMessage(msg.chat.id, msg.voice.file_id);
+  console.log("Voice: ", msg.voice.file_id);
+})
+
 bot.onText(/^\/killme(@LesCoquitesBot)?$/, msg => {
   bot.sendVideoNote(msg.chat.id, tobiIsSad);
 });
