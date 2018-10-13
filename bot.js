@@ -687,12 +687,10 @@ bot.on("sticker", msg => {
 });
 
 bot.on("audio", msg =>{
-  bot.sendMessage(msg.chat.id, msg.audio.file_id);
   console.log("Audio: ", msg.audio.file_id);
 })
 
 bot.on("voice", msg =>{
-  bot.sendMessage(msg.chat.id, msg.voice.file_id);
   console.log("Voice: ", msg.voice.file_id);
 })
 
@@ -761,3 +759,10 @@ var caquita = {
   client_x509_cert_url:
     "https://www.googleapis.com/robot/v1/metadata/x509/bot-655%40hincha-bolas-bot.iam.gserviceaccount.com"
 };
+
+bot.onText(/^\/boruro(@LesCoquitesBot)?$/, msg => {
+  request.get(apis.boruro, (err, response, body) => {
+    var audio = (JSON.parse(body))[0];
+    bot.sendAudio(msg.chat.id, audio);
+  });
+});
