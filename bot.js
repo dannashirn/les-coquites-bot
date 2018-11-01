@@ -686,6 +686,14 @@ bot.on("sticker", msg => {
   console.log("Sticker: " + msg.sticker.file_id);
 });
 
+bot.on("audio", msg =>{
+  console.log("Audio: ", msg.audio.file_id);
+})
+
+bot.on("voice", msg =>{
+  console.log("Voice: ", msg.voice.file_id);
+})
+
 bot.onText(/^\/killme(@LesCoquitesBot)?$/, msg => {
   bot.sendVideoNote(msg.chat.id, tobiIsSad);
 });
@@ -751,3 +759,10 @@ var caquita = {
   client_x509_cert_url:
     "https://www.googleapis.com/robot/v1/metadata/x509/bot-655%40hincha-bolas-bot.iam.gserviceaccount.com"
 };
+
+bot.onText(/^\/boruro(@LesCoquitesBot)?$/, msg => {
+  request.get(apis.boruro, (err, response, body) => {
+    var audio = (JSON.parse(body))[0];
+    bot.sendAudio(msg.chat.id, audio);
+  });
+});
