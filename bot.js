@@ -430,7 +430,7 @@ bot.onText(/^\/dolar(@LesCoquitesBot)?$/, msg => {
       "El dolar libre está $"
         .concat(dolar.items[0].compra).concat("/$").concat(dolar.items[0].venta)
         .concat(" y el blue $")
-        .concat(dolar.items[3].compra).concat("/$").concat(dolar.items[2].venta)
+        .concat(dolar.items[2].compra).concat("/$").concat(dolar.items[2].venta)
     );
   });
 });
