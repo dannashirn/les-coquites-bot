@@ -17,5 +17,6 @@ module.exports = {
   youtube: "https://www.googleapis.com/youtube/v3/search",
   mundialHoy: "http://worldcup.sfg.io/matches/today",
   nuevoDolar: "https://s3.amazonaws.com/status-coins/nums.json",
-  boruro: "https://api.myjson.com/bins/gv87k"
+  boruro: "https://api.myjson.com/bins/gv87k",
+  wikipedia: "https://es.wikipedia.org/w/api.php?action=query&list=search&srprop=snippet&format=json&origin=*&utf8=&srsearch=" //quizas se te ve feo pero funciona
 };
