@@ -43,24 +43,24 @@ bot.onText(/^\/hi(@LesCoquitesBot)?$/, msg => {
   console.log(chatId);
   switch (msg.from.first_name) {
     case "Tobias":
-      bot.sendMessage(
-        chatId,
-        "Muy buenos días amo " +
-          msg.from.first_name +
-          ". Cómo puedo ayudarlo hoy?"
-      );
-      break;
+    bot.sendMessage(
+      chatId,
+      "Muy buenos días amo " +
+      msg.from.first_name +
+      ". Cómo puedo ayudarlo hoy?"
+    );
+    break;
     case "Coca":
-      bot.sendMessage(chatId, "Buen dia Coca, como andan tus hijitos?");
-      break;
+    bot.sendMessage(chatId, "Buen dia Coca, como andan tus hijitos?");
+    break;
     case "Nadia":
-      bot.sendMessage(chatId, "Qué hay de nuevo Doc?");
-      break;
+    bot.sendMessage(chatId, "Qué hay de nuevo Doc?");
+    break;
     case "Kevin":
-      bot.sendMessage(chatId, "Hoolaa, mi amor!");
-      break;
+    bot.sendMessage(chatId, "Hoolaa, mi amor!");
+    break;
     default:
-      bot.sendMessage(chatId, "Hola " + msg.from.first_name);
+    bot.sendMessage(chatId, "Hola " + msg.from.first_name);
   }
 });
 
@@ -99,9 +99,9 @@ bot.onText(/^\/proximoferiado(@LesCoquitesBot)?$/, msg => {
     bot.sendMessage(
       msg.chat.id,
       "Faltan " +
-        diasRestantes +
-        " dias para el proximo feriado\r\n" +
-        feriadoMostrable
+      diasRestantes +
+      " dias para el proximo feriado\r\n" +
+      feriadoMostrable
     );
   });
 });
@@ -206,13 +206,13 @@ bot.onText(/^\/juevesdecubalibre(@LesCoquitesBot)?$/, msg => {
 function showDiasHastaJuevesDeCubaLibre(days) {
   switch (days) {
     case 0:
-      return "Hoy es jueves de cuba libre!!!";
-      break;
+    return "Hoy es jueves de cuba libre!!!";
+    break;
     case 1:
-      return "Mañana es jueves de cuba libre!!!";
-      break;
+    return "Mañana es jueves de cuba libre!!!";
+    break;
     default:
-      return "Faltan " + days + " dias para el jueves de cuba libre :(";
+    return "Faltan " + days + " dias para el jueves de cuba libre :(";
   }
 }
 
@@ -262,8 +262,8 @@ bot.onText(/^\/proximoafter(@LesCoquitesBot)?$/, msg => {
       bot.sendMessage(
         chatId,
         "Faltan "
-          .concat(Math.floor((after - today) / oneDay) + 1)
-          .concat(" dias para el proximo after en Madero")
+        .concat(Math.floor((after - today) / oneDay) + 1)
+        .concat(" dias para el proximo after en Madero")
       );
     }
   } else {
@@ -295,10 +295,10 @@ bot.onText(/^\/libertad(@LesCoquitesBot)?$/, msg => {
     bot.sendMessage(
       chatId,
       "Faltan " +
-        timeTil6 +
-        ":" +
-        minTilNextHour +
-        " horas para la libertad. Algún día, todos seremos libres."
+      timeTil6 +
+      ":" +
+      minTilNextHour +
+      " horas para la libertad. Algún día, todos seremos libres."
     );
   }
 });
@@ -321,9 +321,9 @@ bot.onText(/^\/sugerencia(@LesCoquitesBot)?/, msg => {
 
 bot.onText(/^\/random [\d]+-[\d]+$/, msg => {
   var numbers = msg.text
-    .split("/random ")
-    .pop()
-    .split("-");
+  .split("/random ")
+  .pop()
+  .split("-");
 
   var min = numbers[0];
   var max = numbers[1];
@@ -428,9 +428,9 @@ bot.onText(/^\/dolar(@LesCoquitesBot)?$/, msg => {
     bot.sendMessage(
       chatId,
       "El dolar libre está $"
-        .concat(dolar.items[0].compra).concat("/$").concat(dolar.items[0].venta)
-        .concat(" y el blue $")
-        .concat(dolar.items[2].compra).concat("/$").concat(dolar.items[2].venta)
+      .concat(dolar.items[0].compra).concat("/$").concat(dolar.items[0].venta)
+      .concat(" y el blue $")
+      .concat(dolar.items[2].compra).concat("/$").concat(dolar.items[2].venta)
     );
   });
 });
@@ -457,10 +457,10 @@ bot.onText(/^\/cuandocomemos(@LesCoquitesBot)?$/, msg => {
       bot.sendMessage(
         chatId,
         "Comemos en "
-          .concat(14 - now)
-          .concat(":")
-          .concat(60 - new Date().getMinutes())
-          .concat("horas")
+        .concat(14 - now)
+        .concat(":")
+        .concat(60 - new Date().getMinutes())
+        .concat("horas")
       );
     } else {
       bot.sendMessage(
@@ -585,10 +585,10 @@ function showWeather(chatId, weather) {
   bot.sendMessage(
     chatId,
     "Weather in Buenos Aires: " +
-      weather.WeatherText +
-      "\r\nTemperature: " +
-      weather.Temperature.Metric.Value +
-      "°"
+    weather.WeatherText +
+    "\r\nTemperature: " +
+    weather.Temperature.Metric.Value +
+    "°"
   );
 }
 
@@ -603,9 +603,9 @@ bot.onText(/qu(e|é) hacemos esta noche\??/i, msg => {
   bot.sendMessage(
     msg.chat.id,
     "Lo mismo que hacemos todas las noches " +
-      msg.from.first_name +
-      ", tratar de conquistar al mundo!" +
-      suffix
+    msg.from.first_name +
+    ", tratar de conquistar al mundo!" +
+    suffix
   );
 });
 
@@ -613,16 +613,16 @@ bot.onText(/(facu)|(facultad)/i, msg => {
   switch (msg.from.first_name) {
     case "Nadia":
     case "Bianca":
-      bot.sendMessage(
-        msg.chat.id,
-        "No jodas, vos ya terminaste la facultad " + msg.from.first_name
-      );
-      break;
+    bot.sendMessage(
+      msg.chat.id,
+      "No jodas, vos ya terminaste la facultad " + msg.from.first_name
+    );
+    break;
     default:
-      bot.sendMessage(
-        msg.chat.id,
-        "Deja la facultad de una vez " + msg.from.first_name
-      );
+    bot.sendMessage(
+      msg.chat.id,
+      "Deja la facultad de una vez " + msg.from.first_name
+    );
   }
 });
 
@@ -648,10 +648,10 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Zñáéíóúü ]*$/i, msg => {
       bot.sendMessage(
         msg.chat.id,
         "Aca tenes " +
-          displayName +
-          "\r\n" +
-          "https://www.youtube.com/watch?v=" +
-          videoId
+        displayName +
+        "\r\n" +
+        "https://www.youtube.com/watch?v=" +
+        videoId
       );
     }
   );
@@ -735,13 +735,13 @@ bot.onText(/^\/poroteo(@LesCoquitesBot)?$/, msg => {
 
 function showVotes(votes) {
   return "A favor: " +
-    votes.for +
-    "\nEn contra: " +
-    votes.against +
-    "\nIndeciso: " +
-    votes.unconfirmed +
-    "\nAbstencion: " +
-    votes.abstention;
+  votes.for +
+  "\nEn contra: " +
+  votes.against +
+  "\nIndeciso: " +
+  votes.unconfirmed +
+  "\nAbstencion: " +
+  votes.abstention;
 }
 
 require("./schedule");
@@ -757,7 +757,7 @@ var caquita = {
   token_uri: "https://accounts.google.com/o/oauth2/token",
   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
   client_x509_cert_url:
-    "https://www.googleapis.com/robot/v1/metadata/x509/bot-655%40hincha-bolas-bot.iam.gserviceaccount.com"
+  "https://www.googleapis.com/robot/v1/metadata/x509/bot-655%40hincha-bolas-bot.iam.gserviceaccount.com"
 };
 
 bot.onText(/^\/boruro(@LesCoquitesBot)?$/, msg => {
@@ -768,25 +768,84 @@ bot.onText(/^\/boruro(@LesCoquitesBot)?$/, msg => {
 });
 
 bot.onText(/^\/[W|w]ikipedia(@LesCoquitesBot)?/, msg => {
+
+  if (msg.from.username) {
+    var displayName = msg.from.username;
+  } else {
+    var displayName = msg.from.first_name;
+  }
+
+/*  const languages = {
+    reply_markup: {
+      inline_keyboard:
+      [[{
+        text: 'Español',
+        callback_data: 'ES'
+      }],
+      [{
+        text: 'Ingles',
+        callback_data: 'EN'
+      }]]
+    }
+  };
+
+  bot.sendMessage(msg.chat.id, "Selecciona el idioma que quieras", languages);
+
+  bot.on('callback_query', function onCallbackQuery(callbackQuery) {
+    const lan = callbackQuery.data;
+
+    if (lan === 'EN'){
+      var wiki_api = apis.wikipediaEN;
+      var wik_url = "https://en.wikipedia.org/?curid=";
+      console.log("INGLES")
+    }else if (lan === 'ES'){
+      var wiki_api = apis.wikipediaES;
+      var wiki_url = "https://es.wikipedia.org/?curid=";
+    }
+
+  });*/
+
+
+
   var query = encodeURIComponent(msg.text.toLowerCase().split("/wikipedia ").pop());
-  request.get(apis.wikipedia.concat(query), (err, response, body) => {
+  request.get(apis.wikipediaES.concat(query), (err, response, body) => {
 
     const wiki_url = "https://es.wikipedia.org/?curid=";
-    var first_art = JSON.parse(body).query.search[0];
+    //const wiki_url_en = "https://en.wikipedia.org/?curid=";
 
-    if (msg.from.username) {
-      var displayName = msg.from.username;
-    } else {
-      var displayName = msg.from.first_name;
+    var articulos = JSON.parse(body).query.search.slice(0, 3);
+
+    var buttons = [];
+    for (var i = 0; i < articulos.length; i++){
+      buttons.push([{
+        text: articulos[i].title ,
+        callback_data: i
+      }])
     }
+
+    const arts = {
+      reply_markup: {
+        inline_keyboard: buttons
+      }
+    };
     bot.deleteMessage(msg.chat.id, msg.message_id).catch(err => {});
-    bot.sendMessage(
-      msg.chat.id,
-      "Aca tenes " +
-        displayName +
-        "\r\n" +
-        wiki_url +
-        first_art.pageid
-    );
+    bot.sendMessage(msg.chat.id, "Selecciona el artículo que quieras", arts);
+
+    bot.on('callback_query', function onCallbackQuery(callbackQuery) {
+      const order = callbackQuery.data;
+      const msg = callbackQuery.message;
+
+
+      var text = "Aca tenes " + displayName + "\r\n" +
+      wiki_url + articulos[order].pageid;
+
+      const opts = {
+        chat_id: msg.chat.id,
+        message_id: msg.message_id,
+        text: text
+      };
+
+      bot.editMessageText(text, opts);
+    });
   });
 });
