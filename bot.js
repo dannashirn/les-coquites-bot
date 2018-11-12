@@ -766,3 +766,27 @@ bot.onText(/^\/boruro(@LesCoquitesBot)?$/, msg => {
     bot.sendAudio(msg.chat.id, audio);
   });
 });
+
+bot.onText(/^\/[W|w]ikipedia(@LesCoquitesBot)?/, msg => {
+  var query = encodeURIComponent(msg.text.toLowerCase().split("/wikipedia ").pop());
+  request.get(apis.wikipedia.concat(query), (err, response, body) => {
+
+    const wiki_url = "https://es.wikipedia.org/?curid=";
+    var first_art = JSON.parse(body).query.search[0];
+
+    if (msg.from.username) {
+      var displayName = msg.from.username;
+    } else {
+      var displayName = msg.from.first_name;
+    }
+    bot.deleteMessage(msg.chat.id, msg.message_id).catch(err => {});
+    bot.sendMessage(
+      msg.chat.id,
+      "Aca tenes " +
+        displayName +
+        "\r\n" +
+        wiki_url +
+        first_art.pageid
+    );
+  });
+});
