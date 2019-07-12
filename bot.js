@@ -172,7 +172,7 @@ bot.onText(/^\/nasatext(@LesCoquitesBot)?$/, msg => {
 });
 
 bot.onText(/^\/subte(@LesCoquitesBot)?$/, msg => {
-  request.get(apis.subtePersistido, function(err, httpResponse, body) {
+  request.get(apis.subteMyJsonNaxo, function(err, httpResponse, body) {
     var estados = JSON.parse(body);
     var showableStatuses = showStatus(estados);
     bot.sendMessage(msg.chat.id, showableStatuses);
