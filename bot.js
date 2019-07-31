@@ -269,7 +269,7 @@ bot.onText(/^\/proximoafter(@LesCoquitesBot)?$/, msg => {
   } else {
     bot.sendMessage(
       chatId,
-      "El after ya paso, pero como siguen resacosos, no me cargaron cuando es el proximo"
+      "La coyuntura"
     );
   }
 });
