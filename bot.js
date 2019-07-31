@@ -599,7 +599,7 @@ bot.onText(/qu(e|é) hacemos esta noche\??/i, msg => {
     var suffix = " (despues de agarrarnos un pedo bárbaro en el after)";
   } else {
     var suffix = "";
-  }¥
+  }
   bot.sendMessage(
     msg.chat.id,
     "Lo mismo que hacemos todas las noches " +
