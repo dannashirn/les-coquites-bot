@@ -599,7 +599,7 @@ bot.onText(/qu(e|é) hacemos esta noche\??/i, msg => {
     var suffix = " (despues de agarrarnos un pedo bárbaro en el after)";
   } else {
     var suffix = "";
-  }
+  }¥
   bot.sendMessage(
     msg.chat.id,
     "Lo mismo que hacemos todas las noches " +
@@ -643,15 +643,24 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Zñáéíóúü ]*$/i, msg => {
         bot.sendMessage("Aflojenle un poco muchachos");
         return;
       }
-      var videoId = JSON.parse(body).items[0].id.videoId;
-      bot.deleteMessage(msg.chat.id, msg.message_id).catch(err => {});
+      var items = JSON.parse(body).items
+      var videoId
+      var message
+      if (items) {
+        videoId = items[0].id.videoId;
+        bot.deleteMessage(msg.chat.id, msg.message_id).catch(err => { });
+        message = "Aca tenes " +
+          displayName +
+          "\r\n" +
+          "https://www.youtube.com/watch?v=" +
+          videoId
+      } else {
+        message = "No encontré nada, así que te paso este: https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      }
+
       bot.sendMessage(
         msg.chat.id,
-        "Aca tenes " +
-        displayName +
-        "\r\n" +
-        "https://www.youtube.com/watch?v=" +
-        videoId
+        message
       );
     }
   );
