@@ -7,7 +7,7 @@ module.exports = schedule.scheduleJob("*/1 * * * *", () => {
 });
 
 module.exports = schedule.scheduleJob("*/3 * * * *", () => {
-  request.get(apis.haySubte, function(err, httpResponse, body) {
+  request.get(apis.subteMyJsonNaxo, function(err, httpResponse, body) {
     if (httpResponse.statusCode != 200) {
       console.log("Subte API Caida", httpResponse);
       return;
