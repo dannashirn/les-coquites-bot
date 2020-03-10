@@ -34,7 +34,7 @@ const tobiIsSad = "DQADAQADSgADkP7QRKT2myzp1DPoAg";
 
 const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.send("OK");
 });
 
@@ -43,24 +43,24 @@ bot.onText(/^\/hi(@LesCoquitesBot)?$/, msg => {
   console.log(chatId);
   switch (msg.from.first_name) {
     case "Tobias":
-    bot.sendMessage(
-      chatId,
-      "Muy buenos días amo " +
-      msg.from.first_name +
-      ". Cómo puedo ayudarlo hoy?"
-    );
-    break;
+      bot.sendMessage(
+        chatId,
+        "Muy buenos días amo " +
+        msg.from.first_name +
+        ". Cómo puedo ayudarlo hoy?"
+      );
+      break;
     case "Coca":
-    bot.sendMessage(chatId, "Buen dia Coca, como andan tus hijitos?");
-    break;
+      bot.sendMessage(chatId, "Buen dia Coca, como andan tus hijitos?");
+      break;
     case "Nadia":
-    bot.sendMessage(chatId, "Qué hay de nuevo Doc?");
-    break;
+      bot.sendMessage(chatId, "Qué hay de nuevo Doc?");
+      break;
     case "Kevin":
-    bot.sendMessage(chatId, "Hoolaa, mi amor!");
-    break;
+      bot.sendMessage(chatId, "Hoolaa, mi amor!");
+      break;
     default:
-    bot.sendMessage(chatId, "Hola " + msg.from.first_name);
+      bot.sendMessage(chatId, "Hola " + msg.from.first_name);
   }
 });
 
@@ -79,7 +79,7 @@ bot.onText(/^\/o+h+(@LesCoquitesBot)?$/, msg => {
 
 bot.onText(/^\/feriados(@LesCoquitesBot)?$/, msg => {
   var mesActual = new Date().getMonth() + 1;
-  request.get(apis.feriadosApi, function(err, httpResponse, body) {
+  request.get(apis.feriadosApi, function (err, httpResponse, body) {
     var feriados = JSON.parse(body);
     var feriadosDelMes = feriados.filter(f => f.mes === mesActual);
     var feriadosMostrables = feriadosDelMes.map(f =>
@@ -91,7 +91,7 @@ bot.onText(/^\/feriados(@LesCoquitesBot)?$/, msg => {
 
 bot.onText(/^\/proximoferiado(@LesCoquitesBot)?$/, msg => {
   var mesActual = new Date().getMonth() + 1;
-  request.get(apis.feriadosApi, function(err, httpResponse, body) {
+  request.get(apis.feriadosApi, function (err, httpResponse, body) {
     var feriados = JSON.parse(body);
     var feriado = proximoFeriado(feriados);
     var feriadoMostrable = mostrarFeriadoEnLinea(feriado, mesActual);
@@ -148,15 +148,16 @@ function mostrarFeriadoEnLinea(feriado, mesActual) {
 }
 
 bot.onText(/^\/btc(@LesCoquitesBot)?$/, msg => {
-  request.get(apis.btcAPI, function(err, httpResponse, body) {
+  request.get(apis.btcProAPI + '?id=1&CMC_PRO_API_KEY=' + keys.bitcoinKey, function (err, httpResponse, body) {
     var btc = JSON.parse(body);
-    bot.sendMessage(msg.chat.id, "$" + btc.data.quotes.USD.price);
+    console.log(btc)
+    bot.sendMessage(msg.chat.id, "$" + btc.data["1"].quote.USD.price.toFixed(2));
   });
 });
 
 bot.onText(/^\/nasa(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
-  request.get(apis.nasaAPI, function(err, httpResponse, body) {
+  request.get(apis.nasaAPI, function (err, httpResponse, body) {
     var nasa = JSON.parse(body);
     bot.sendPhoto(chatId, nasa.hdurl);
   });
@@ -164,7 +165,7 @@ bot.onText(/^\/nasa(@LesCoquitesBot)?$/, msg => {
 
 bot.onText(/^\/nasatext(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id;
-  request.get(apis.nasaAPI, function(err, httpResponse, body) {
+  request.get(apis.nasaAPI, function (err, httpResponse, body) {
     var nasa = JSON.parse(body);
     bot.sendMessage(chatId, nasa.explanation);
     bot.sendPhoto(chatId, nasa.hdurl);
@@ -172,7 +173,7 @@ bot.onText(/^\/nasatext(@LesCoquitesBot)?$/, msg => {
 });
 
 bot.onText(/^\/subte(@LesCoquitesBot)?$/, msg => {
-  request.get(apis.subteMyJsonNaxo, function(err, httpResponse, body) {
+  request.get(apis.subteMyJsonNaxo, function (err, httpResponse, body) {
     var estados = JSON.parse(body);
     var showableStatuses = showStatus(estados);
     bot.sendMessage(msg.chat.id, showableStatuses);
@@ -188,12 +189,12 @@ function showStatus(estados) {
   return showable.join("\r\n");
 }
 
-bot.on("new_chat_participant", function(msg) {
+bot.on("new_chat_participant", function (msg) {
   bot.sendMessage(msg.chat.id, "Bienvenido " + msg.from.first_name);
 });
 
 var port = process.env.PORT || 3000;
-http.listen(port, function() {
+http.listen(port, function () {
   console.log("listening on *:" + port);
 });
 
@@ -206,13 +207,13 @@ bot.onText(/^\/juevesdecubalibre(@LesCoquitesBot)?$/, msg => {
 function showDiasHastaJuevesDeCubaLibre(days) {
   switch (days) {
     case 0:
-    return "Hoy es jueves de cuba libre!!!";
-    break;
+      return "Hoy es jueves de cuba libre!!!";
+      break;
     case 1:
-    return "Mañana es jueves de cuba libre!!!";
-    break;
+      return "Mañana es jueves de cuba libre!!!";
+      break;
     default:
-    return "Faltan " + days + " dias para el jueves de cuba libre :(";
+      return "Faltan " + days + " dias para el jueves de cuba libre :(";
   }
 }
 
@@ -220,7 +221,7 @@ bot.onText(/^\/pokemon [1-9]\d?\d?/, msg => {
   const chatId = msg.chat.id;
   var pokemon_number = msg.text.split("/pokemon ").pop();
   console.log(apis.pokedex.concat(pokemon_number));
-  request.get(apis.pokedex.concat(pokemon_number), function(
+  request.get(apis.pokedex.concat(pokemon_number), function (
     err,
     httpResponse,
     body
@@ -262,8 +263,8 @@ bot.onText(/^\/proximoafter(@LesCoquitesBot)?$/, msg => {
       bot.sendMessage(
         chatId,
         "Faltan "
-        .concat(Math.floor((after - today) / oneDay) + 1)
-        .concat(" dias para el proximo after en Madero")
+          .concat(Math.floor((after - today) / oneDay) + 1)
+          .concat(" dias para el proximo after en Madero")
       );
     }
   } else {
@@ -321,9 +322,9 @@ bot.onText(/^\/sugerencia(@LesCoquitesBot)?/, msg => {
 
 bot.onText(/^\/random [\d]+-[\d]+$/, msg => {
   var numbers = msg.text
-  .split("/random ")
-  .pop()
-  .split("-");
+    .split("/random ")
+    .pop()
+    .split("-");
 
   var min = numbers[0];
   var max = numbers[1];
@@ -345,7 +346,7 @@ bot.onText(/^\/dondecomemos(@LesCoquitesBot)?$/, msg => {
 bot.onText(/^\/todo [a-zA-Z0-9_ ]*/, msg => {
   var text = msg.text.split("/todo ").pop();
   var todoListSaved;
-  request.get(apis.todoList, function(err, httpResponse, body) {
+  request.get(apis.todoList, function (err, httpResponse, body) {
     todoListSaved = JSON.parse(body);
     var newTodo = {};
     newTodo.text = text;
@@ -353,7 +354,7 @@ bot.onText(/^\/todo [a-zA-Z0-9_ ]*/, msg => {
     todoListSaved.push(newTodo);
     request(
       { url: apis.todoList, method: "PUT", json: todoListSaved },
-      function(request, response) {
+      function (request, response) {
         bot.sendMessage(msg.chat.id, "TodoList Updated");
       }
     );
@@ -362,7 +363,7 @@ bot.onText(/^\/todo [a-zA-Z0-9_ ]*/, msg => {
 
 //Consuntal lista de tareas
 bot.onText(/^\/todolist/, msg => {
-  request.get(apis.todoList, function(err, httpResponse, body) {
+  request.get(apis.todoList, function (err, httpResponse, body) {
     var todoList = JSON.parse(body);
     if (todoList.length !== 0) {
       var todoListMostrable = todoList.map(a =>
@@ -379,7 +380,7 @@ bot.onText(/^\/todolist/, msg => {
 //Mark todo list
 bot.onText(/^\/checktodo [0-9]\d?\d?/, msg => {
   var idTodo = parseInt(msg.text.split("/checktodo ").pop());
-  request.get(apis.todoList, function(err, httpResponse, body) {
+  request.get(apis.todoList, function (err, httpResponse, body) {
     var todoList = JSON.parse(body);
     if (idTodo >= todoList.length) {
       bot.sendMessage(msg.chat.id, "No existe tarea.");
@@ -387,7 +388,7 @@ bot.onText(/^\/checktodo [0-9]\d?\d?/, msg => {
     }
 
     todoList[idTodo].state = "✓";
-    request({ url: apis.todoList, method: "PUT", json: todoList }, function(
+    request({ url: apis.todoList, method: "PUT", json: todoList }, function (
       request,
       response
     ) {
@@ -398,7 +399,7 @@ bot.onText(/^\/checktodo [0-9]\d?\d?/, msg => {
 
 //Reset todolist
 bot.onText(/^\/resettodolist/, msg => {
-  request({ url: apis.todoList, method: "PUT", json: [] }, function(
+  request({ url: apis.todoList, method: "PUT", json: [] }, function (
     request,
     response
   ) {
@@ -411,11 +412,11 @@ function mostrarTareaEnLinea(tarea, index) {
 }
 
 bot.onText(/^\/cleanchecked(@LesCoquitesBot)?$/, msg => {
-  request.get(apis.todoList, function(err, httpResponse, body) {
+  request.get(apis.todoList, function (err, httpResponse, body) {
     var todoList = JSON.parse(body);
     todoList = todoList.filter(elem => elem.state === "☓");
 
-    request({ url: apis.todoList, method: "PUT", json: todoList }, function() {
+    request({ url: apis.todoList, method: "PUT", json: todoList }, function () {
       bot.sendMessage(msg.chat.id, "Checked items borrados");
     });
   });
@@ -423,14 +424,14 @@ bot.onText(/^\/cleanchecked(@LesCoquitesBot)?$/, msg => {
 
 bot.onText(/^\/dolar(@LesCoquitesBot)?$/, msg => {
   var chatId = msg.chat.id;
-  request.get(apis.nuevoDolar, function(err, httpResponse, body) {
+  request.get(apis.nuevoDolar, function (err, httpResponse, body) {
     var dolar = JSON.parse(body);
     bot.sendMessage(
       chatId,
       "El dolar libre está $"
-      .concat(dolar.items[0].compra).concat("/$").concat(dolar.items[0].venta)
-      .concat(" y el blue $")
-      .concat(dolar.items[2].compra).concat("/$").concat(dolar.items[2].venta)
+        .concat(dolar.items[0].compra).concat("/$").concat(dolar.items[0].venta)
+        .concat(" y el blue $")
+        .concat(dolar.items[2].compra).concat("/$").concat(dolar.items[2].venta)
     );
   });
 });
@@ -457,10 +458,10 @@ bot.onText(/^\/cuandocomemos(@LesCoquitesBot)?$/, msg => {
       bot.sendMessage(
         chatId,
         "Comemos en "
-        .concat(14 - now)
-        .concat(":")
-        .concat(60 - new Date().getMinutes())
-        .concat("horas")
+          .concat(14 - now)
+          .concat(":")
+          .concat(60 - new Date().getMinutes())
+          .concat("horas")
       );
     } else {
       bot.sendMessage(
@@ -473,7 +474,7 @@ bot.onText(/^\/cuandocomemos(@LesCoquitesBot)?$/, msg => {
 
 bot.onText(/^\/unchecktodo [0-9]\d?\d?/, msg => {
   var idTodo = parseInt(msg.text.split("/unchecktodo ").pop());
-  request.get(apis.todoList, function(err, httpResponse, body) {
+  request.get(apis.todoList, function (err, httpResponse, body) {
     var todoList = JSON.parse(body);
     if (idTodo >= todoList.length) {
       bot.sendMessage(msg.chat.id, "No existe tarea.");
@@ -481,7 +482,7 @@ bot.onText(/^\/unchecktodo [0-9]\d?\d?/, msg => {
     }
 
     todoList[idTodo].state = "☓";
-    request({ url: apis.todoList, method: "PUT", json: todoList }, function(
+    request({ url: apis.todoList, method: "PUT", json: todoList }, function (
       request,
       response
     ) {
@@ -502,16 +503,16 @@ bot.onText(/^\/atr(@LesCoquitesBot)?$/, msg => {
 
 /////////////////////////////////////SUBTE AUTOMATICO///////////////////////////////////
 module.exports = {
-  alertSubte: function(bodyParsed) {
-    request.get(apis.subtePersistido, function(err, httpResponse, body) {
+  alertSubte: function (bodyParsed) {
+    request.get(apis.subtePersistido, function (err, httpResponse, body) {
       if (showStatus(JSON.parse(body)) != showStatus(bodyParsed)) {
-        request.get(apis.suscripcionSubte, function(
+        request.get(apis.suscripcionSubte, function (
           err,
           httpResponse,
           bodySecond
         ) {
           listaChatId = JSON.parse(bodySecond);
-          listaChatId.forEach(function(chatId) {
+          listaChatId.forEach(function (chatId) {
             bot.sendMessage(chatId, showStatus(bodyParsed));
           });
         });
@@ -523,7 +524,7 @@ module.exports = {
 
 bot.onText(/^\/subscribesubte(@LesCoquitesBot)?$/, msg => {
   chatId = msg.chat.id;
-  request.get(apis.suscripcionSubte, function(err, httpResponse, body) {
+  request.get(apis.suscripcionSubte, function (err, httpResponse, body) {
     var lista = JSON.parse(body);
     if (lista.includes(chatId)) {
       bot.sendMessage(chatId, "Este chat ya está suscripto!");
@@ -540,7 +541,7 @@ bot.onText(/^\/subscribesubte(@LesCoquitesBot)?$/, msg => {
 
 bot.onText(/^\/unsubscribesubte(@LesCoquitesBot)?$/, msg => {
   chatId = msg.chat.id;
-  request.get(apis.suscripcionSubte, function(err, httpResponse, body) {
+  request.get(apis.suscripcionSubte, function (err, httpResponse, body) {
     var lista = JSON.parse(body);
     if (lista.includes(chatId)) {
       lista.splice(lista.indexOf(chatId), 1);
@@ -571,7 +572,7 @@ bot.onText(/^\/weather(@LesCoquitesBot)?$/, msg => {
         return;
       }
       if (httpResponse.headers["content-encoding"] == "gzip") {
-        zlib.gunzip(body, function(err, dezipped) {
+        zlib.gunzip(body, function (err, dezipped) {
           showWeather(msg.chat.id, JSON.parse(dezipped)[0]);
         });
       } else {
@@ -613,16 +614,16 @@ bot.onText(/(facu)|(facultad)/i, msg => {
   switch (msg.from.first_name) {
     case "Nadia":
     case "Bianca":
-    bot.sendMessage(
-      msg.chat.id,
-      "No jodas, vos ya terminaste la facultad " + msg.from.first_name
-    );
-    break;
+      bot.sendMessage(
+        msg.chat.id,
+        "No jodas, vos ya terminaste la facultad " + msg.from.first_name
+      );
+      break;
     default:
-    bot.sendMessage(
-      msg.chat.id,
-      "Deja la facultad de una vez " + msg.from.first_name
-    );
+      bot.sendMessage(
+        msg.chat.id,
+        "Deja la facultad de una vez " + msg.from.first_name
+      );
   }
 });
 
@@ -677,7 +678,7 @@ bot.onText(/^\/chinito(@LesCoquitesBot)?/, msg => {
   bot.sendSticker(chatId, "CAADAQADMQAD8Pe7Aj5g8hWbOkDRAg");
   if (msg.reply_to_message) {
     bot.sendMessage(chatId, achinosar(msg.reply_to_message.text))
-  }else{
+  } else {
     var text = msg.text.split("/chinito ").pop();
     bot.sendMessage(chatId, achinosar(text));
   }
@@ -695,11 +696,11 @@ bot.on("sticker", msg => {
   console.log("Sticker: " + msg.sticker.file_id);
 });
 
-bot.on("audio", msg =>{
+bot.on("audio", msg => {
   console.log("Audio: ", msg.audio.file_id);
 })
 
-bot.on("voice", msg =>{
+bot.on("voice", msg => {
   console.log("Voice: ", msg.voice.file_id);
 })
 
@@ -744,13 +745,13 @@ bot.onText(/^\/poroteo(@LesCoquitesBot)?$/, msg => {
 
 function showVotes(votes) {
   return "A favor: " +
-  votes.for +
-  "\nEn contra: " +
-  votes.against +
-  "\nIndeciso: " +
-  votes.unconfirmed +
-  "\nAbstencion: " +
-  votes.abstention;
+    votes.for +
+    "\nEn contra: " +
+    votes.against +
+    "\nIndeciso: " +
+    votes.unconfirmed +
+    "\nAbstencion: " +
+    votes.abstention;
 }
 
 require("./schedule");
@@ -766,7 +767,7 @@ var caquita = {
   token_uri: "https://accounts.google.com/o/oauth2/token",
   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
   client_x509_cert_url:
-  "https://www.googleapis.com/robot/v1/metadata/x509/bot-655%40hincha-bolas-bot.iam.gserviceaccount.com"
+    "https://www.googleapis.com/robot/v1/metadata/x509/bot-655%40hincha-bolas-bot.iam.gserviceaccount.com"
 };
 
 bot.onText(/^\/boruro(@LesCoquitesBot)?$/, msg => {
@@ -784,35 +785,35 @@ bot.onText(/^\/[W|w]ikipedia(@LesCoquitesBot)?/, msg => {
     var displayName = msg.from.first_name;
   }
 
-/*  const languages = {
-    reply_markup: {
-      inline_keyboard:
-      [[{
-        text: 'Español',
-        callback_data: 'ES'
-      }],
-      [{
-        text: 'Ingles',
-        callback_data: 'EN'
-      }]]
-    }
-  };
-
-  bot.sendMessage(msg.chat.id, "Selecciona el idioma que quieras", languages);
-
-  bot.on('callback_query', function onCallbackQuery(callbackQuery) {
-    const lan = callbackQuery.data;
-
-    if (lan === 'EN'){
-      var wiki_api = apis.wikipediaEN;
-      var wik_url = "https://en.wikipedia.org/?curid=";
-      console.log("INGLES")
-    }else if (lan === 'ES'){
-      var wiki_api = apis.wikipediaES;
-      var wiki_url = "https://es.wikipedia.org/?curid=";
-    }
-
-  });*/
+  /*  const languages = {
+      reply_markup: {
+        inline_keyboard:
+        [[{
+          text: 'Español',
+          callback_data: 'ES'
+        }],
+        [{
+          text: 'Ingles',
+          callback_data: 'EN'
+        }]]
+      }
+    };
+  
+    bot.sendMessage(msg.chat.id, "Selecciona el idioma que quieras", languages);
+  
+    bot.on('callback_query', function onCallbackQuery(callbackQuery) {
+      const lan = callbackQuery.data;
+  
+      if (lan === 'EN'){
+        var wiki_api = apis.wikipediaEN;
+        var wik_url = "https://en.wikipedia.org/?curid=";
+        console.log("INGLES")
+      }else if (lan === 'ES'){
+        var wiki_api = apis.wikipediaES;
+        var wiki_url = "https://es.wikipedia.org/?curid=";
+      }
+  
+    });*/
 
 
 
@@ -825,9 +826,9 @@ bot.onText(/^\/[W|w]ikipedia(@LesCoquitesBot)?/, msg => {
     var articulos = JSON.parse(body).query.search.slice(0, 3);
 
     var buttons = [];
-    for (var i = 0; i < articulos.length; i++){
+    for (var i = 0; i < articulos.length; i++) {
       buttons.push([{
-        text: articulos[i].title ,
+        text: articulos[i].title,
         callback_data: i
       }])
     }
@@ -837,7 +838,7 @@ bot.onText(/^\/[W|w]ikipedia(@LesCoquitesBot)?/, msg => {
         inline_keyboard: buttons
       }
     };
-    bot.deleteMessage(msg.chat.id, msg.message_id).catch(err => {});
+    bot.deleteMessage(msg.chat.id, msg.message_id).catch(err => { });
     bot.sendMessage(msg.chat.id, "Selecciona el artículo que quieras", arts);
 
     bot.on('callback_query', function onCallbackQuery(callbackQuery) {
@@ -846,7 +847,7 @@ bot.onText(/^\/[W|w]ikipedia(@LesCoquitesBot)?/, msg => {
 
 
       var text = "Aca tenes " + displayName + "\r\n" +
-      wiki_url + articulos[order].pageid;
+        wiki_url + articulos[order].pageid;
 
       const opts = {
         chat_id: msg.chat.id,

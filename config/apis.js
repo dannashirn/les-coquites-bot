@@ -3,6 +3,7 @@ module.exports = {
     new Date().getFullYear()
   ),
   btcAPI: "https://api.coinmarketcap.com/v2/ticker/1",
+  btcProAPI: "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest",
   nasaAPI:
     "https://api.nasa.gov/planetary/apod?api_key=CyE7Qqsj6zAPenKJzDt6OIDulpFFTrGTunguMLn4",
   haySubte: "https://haysubte.now.sh/api",
