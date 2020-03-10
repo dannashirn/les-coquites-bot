@@ -150,7 +150,6 @@ function mostrarFeriadoEnLinea(feriado, mesActual) {
 bot.onText(/^\/btc(@LesCoquitesBot)?$/, msg => {
   request.get(apis.btcProAPI + '?id=1&CMC_PRO_API_KEY=' + keys.bitcoinKey, function (err, httpResponse, body) {
     var btc = JSON.parse(body);
-    console.log(btc)
     bot.sendMessage(msg.chat.id, "$" + btc.data["1"].quote.USD.price.toFixed(2));
   });
 });
