@@ -21,5 +21,6 @@ module.exports = {
   boruro: "https://api.myjson.com/bins/gv87k",
   subteMyJsonNaxo: "https://api.myjson.com/bins/kj347",
   wikipediaES: "https://es.wikipedia.org/w/api.php?action=query&list=search&srprop=snippet&format=json&origin=*&utf8=&srsearch=", //quizas se te ve feo pero funciona
-  wikipediaEN: "https://en.wikipedia.org/w/api.php?action=query&list=search&srprop=snippet&format=json&origin=*&utf8=&srsearch="
+  wikipediaEN: "https://en.wikipedia.org/w/api.php?action=query&list=search&srprop=snippet&format=json&origin=*&utf8=&srsearch=",
+  dolarPiola: "https://www.valordolarblue.com.ar/data.json?",
 };

@@ -188,10 +188,6 @@ function showStatus(estados) {
   return showable.join("\r\n");
 }
 
-bot.on("new_chat_participant", function (msg) {
-  bot.sendMessage(msg.chat.id, "Bienvenido " + msg.from.first_name);
-});
-
 var port = process.env.PORT || 3000;
 http.listen(port, function () {
   console.log("listening on *:" + port);
@@ -423,15 +419,42 @@ bot.onText(/^\/cleanchecked(@LesCoquitesBot)?$/, msg => {
 
 bot.onText(/^\/dolar(@LesCoquitesBot)?$/, msg => {
   var chatId = msg.chat.id;
-  request.get(apis.nuevoDolar, function (err, httpResponse, body) {
+
+  request.get(apis.dolarPiola, function (err, httpResponse, body) {
     var dolar = JSON.parse(body);
     bot.sendMessage(
       chatId,
       "El dolar libre está $"
-        .concat(dolar.items[0].compra).concat("/$").concat(dolar.items[0].venta)
+        .concat(dolar[dolar.length - 1].oficial_venta)
         .concat(" y el blue $")
-        .concat(dolar.items[2].compra).concat("/$").concat(dolar.items[2].venta)
+        .concat(dolar[dolar.length - 1].blue_venta)
     );
+  });
+});
+
+bot.onText(/^\/dolar (\d\d\d\d-\d\d-\d\d)$/, msg => {
+  var chatId = msg.chat.id;
+  let date = msg.text.split("dolar").pop().trim()
+  console.log(date)
+
+  request.get(apis.dolarPiola, function (_, httpResponse, body) {
+    var dolar = JSON.parse(body);
+    const buscado = dolar.find(({ fecha }) => fecha === date)
+
+    if (buscado) {
+      bot.sendMessage(
+        chatId,
+        "El " + date + " el oficial estaba $"
+          .concat(buscado.oficial_venta)
+          .concat(" y el blue $")
+          .concat(buscado.blue_venta)
+      );
+    } else {
+      bot.sendMessage(
+        chatId,
+        "No encontré cotización para ese día"
+      )
+    }
   });
 });
 
@@ -618,6 +641,11 @@ bot.onText(/(facu)|(facultad)/i, msg => {
         "No jodas, vos ya terminaste la facultad " + msg.from.first_name
       );
       break;
+    case "Franco":
+      bot.sendMessate(
+        msg.chat.id,
+        "Al fin alquien que me hace caso y deja la facultad " + msg.from.first_name
+      )
     default:
       bot.sendMessage(
         msg.chat.id,
@@ -707,67 +735,7 @@ bot.onText(/^\/killme(@LesCoquitesBot)?$/, msg => {
   bot.sendVideoNote(msg.chat.id, tobiIsSad);
 });
 
-var poroteo = new GoogleSpreadsheet(poroteoSheet);
-
-const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
-bot.onText(/^\/poroteo(@LesCoquitesBot)?$/, msg => {
-  poroteo.useServiceAccountAuth(caquita, googleToken => {
-    // poroteo.setAuthToken(googleToken);
-    poroteo.getCells(
-      1,
-      {
-        "min-row": 14,
-        "max-row": 14,
-        "min-col": 4,
-        "max-col": 7,
-        "return-empty": true
-      },
-      (err, cells) => {
-        if (err) {
-          bot.sendMessage(
-            msg.chat.id,
-            "Error al acceder a la planilla, contactese con el administrador"
-          );
-          return;
-        }
-        var votes = {
-          for: cells[0].value,
-          against: cells[1].value,
-          unconfirmed: cells[2].value,
-          abstention: cells[3].value
-        };
-        bot.sendMessage(msg.chat.id, showVotes(votes));
-      }
-    );
-  });
-});
-
-function showVotes(votes) {
-  return "A favor: " +
-    votes.for +
-    "\nEn contra: " +
-    votes.against +
-    "\nIndeciso: " +
-    votes.unconfirmed +
-    "\nAbstencion: " +
-    votes.abstention;
-}
-
 require("./schedule");
-
-var caquita = {
-  type: "service_account",
-  project_id: "hincha-bolas-bot",
-  private_key_id: "e2f647cb75217bc5b5c7490ee753972c30f06de6",
-  private_key: keys.serviceKey,
-  client_email: "bot-655@hincha-bolas-bot.iam.gserviceaccount.com",
-  client_id: "105447702251730977405",
-  auth_uri: "https://accounts.google.com/o/oauth2/auth",
-  token_uri: "https://accounts.google.com/o/oauth2/token",
-  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-  client_x509_cert_url:
-    "https://www.googleapis.com/robot/v1/metadata/x509/bot-655%40hincha-bolas-bot.iam.gserviceaccount.com"
-};
 
 bot.onText(/^\/boruro(@LesCoquitesBot)?$/, msg => {
   request.get(apis.boruro, (err, response, body) => {
