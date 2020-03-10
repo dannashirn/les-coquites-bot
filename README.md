@@ -15,5 +15,5 @@
   - crear archivo config/dev.js exportando el token creado 
   - realizar las pruebas desde el BOT creado para prueba. 
 
-## Trabajar en rama aparte y hacer Pull-Requests
+## Trabajar en rama aparte y mandar Pull-Requests
 
