@@ -94,6 +94,7 @@ module.exports = bot => {
           "Al fin alquien que me hace caso y deja la facultad " +
             msg.from.first_name,
         )
+        break
       default:
         bot.sendMessage(
           msg.chat.id,
