@@ -1,3 +1,5 @@
+process.env.NTBA_FIX_319 = 1
+
 var moment = require("moment")
 moment().format()
 var express = require("express")
