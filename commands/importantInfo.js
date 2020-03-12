@@ -23,5 +23,12 @@ module.exports = bot => {
         }
         bot.sendMessage(msg.chat.id, message)
       })
+      .then(error => {
+        console.log(error)
+        bot.sendMessage(
+          msg.chat.id,
+          "The required API for this command is not working, please contact the bot admin",
+        )
+      })
   })
 }
