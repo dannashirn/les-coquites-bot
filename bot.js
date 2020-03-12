@@ -18,6 +18,7 @@ var bot = new TelegramBot(token, { polling: true })
 bot.on("polling_error", err => console.log(err))
 
 // Commands
+require("./commands/importantInfo")(bot)
 require("./commands/stupidText")(bot)
 require("./commands/gifsAndStickers")(bot)
 require("./commands/guita")(bot)
