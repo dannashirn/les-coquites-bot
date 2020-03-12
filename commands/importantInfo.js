@@ -11,7 +11,6 @@ module.exports = bot => {
         const items = response.data.items
         for (i in items) {
           const item = items[i]
-          console.log(item.currency.length)
           if (item.currency.length > 0) {
             message = message.concat(
               item.currency,
