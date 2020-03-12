@@ -89,7 +89,7 @@ module.exports = bot => {
         )
         break
       case "Franco":
-        bot.sendMessate(
+        bot.sendMessage(
           msg.chat.id,
           "Al fin alquien que me hace caso y deja la facultad " +
             msg.from.first_name,
