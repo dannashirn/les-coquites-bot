@@ -3,7 +3,7 @@ const axios = require("axios")
 module.exports = bot => {
   console.log("Important Info commands enabled")
 
-  bot.onText(/coronavirus(@LesCoquitesBot)?/, msg => {
+  bot.onText(/\/coronavirus(@LesCoquitesBot)?/, msg => {
     axios
       .get("https://d1q0nvr1cscr0c.cloudfront.net/coronavirus/coronavirus.json")
       .then(response => {
