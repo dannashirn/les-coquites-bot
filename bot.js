@@ -2,12 +2,6 @@ process.env.NTBA_FIX_319 = 1
 
 var moment = require("moment")
 moment().format()
-var express = require("express")
-var bodyParser = require("body-parser")
-var app = express()
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-var http = require("http").Server(app)
 var request = require("request")
 var TelegramBot = require("node-telegram-bot-api")
 var zlib = require("zlib")
@@ -19,91 +13,21 @@ var bot = new TelegramBot(token, { polling: true })
 
 bot.on("polling_error", err => console.log(err))
 
+// Basic set up
+require("./app")
+require("./schedule")
+
 // Commands
 require("./commands/importantInfo")(bot)
 require("./commands/stupidText")(bot)
 require("./commands/gifsAndStickers")(bot)
 require("./commands/guita")(bot)
 require("./commands/audios")(bot)
+require("./commands/dateBased")(bot)
+
+
 
 const bsasKey = 7894
-
-const oneDayInMillis = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds
-
-app.get("/", function(req, res) {
-  res.send("OK")
-})
-
-// Needs refactor
-bot.onText(/^\/feriados(@LesCoquitesBot)?$/, msg => {
-  var mesActual = new Date().getMonth() + 1
-  request.get(apis.feriadosApi, function(err, httpResponse, body) {
-    var feriados = JSON.parse(body)
-    var feriadosDelMes = feriados.filter(f => f.mes === mesActual)
-    var feriadosMostrables = feriadosDelMes.map(f =>
-      mostrarFeriadoEnLinea(f, mesActual),
-    )
-    bot.sendMessage(msg.chat.id, feriadosMostrables.join("\r\n"))
-  })
-})
-
-bot.onText(/^\/proximoferiado(@LesCoquitesBot)?$/, msg => {
-  var mesActual = new Date().getMonth() + 1
-  request.get(apis.feriadosApi, function(err, httpResponse, body) {
-    var feriados = JSON.parse(body)
-    var feriado = proximoFeriado(feriados)
-    var feriadoMostrable = mostrarFeriadoEnLinea(feriado, mesActual)
-    var diasRestantes = diasHastaFeriado(feriado)
-    bot.sendMessage(
-      msg.chat.id,
-      "Faltan " +
-        diasRestantes +
-        " dias para el proximo feriado\r\n" +
-        feriadoMostrable,
-    )
-  })
-})
-
-function proximoFeriado(feriados) {
-  var today = new Date()
-  var proximos = feriados.filter(f => f.mes >= today.getMonth() + 1)
-  if (
-    proximos[0].mes == today.getMonth() + 1 &&
-    proximos[0].dia <= today.getDate()
-  ) {
-    return proximoFeriado(proximos.slice(1))
-  } else {
-    return proximos[0]
-  }
-  //[0];
-}
-
-function diasHastaFeriado(feriado) {
-  var firstDate = new Date()
-  var secondDate = new Date(
-    firstDate.getFullYear(),
-    feriado.mes - 1,
-    feriado.dia,
-    3,
-  )
-
-  return Math.ceil(
-    Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDayInMillis),
-  )
-}
-
-function mostrarFeriadoEnLinea(feriado, mesActual) {
-  return (
-    feriado.motivo +
-    "(" +
-    feriado.tipo +
-    ") " +
-    "dia: " +
-    feriado.dia +
-    "/" +
-    feriado.mes
-  )
-}
 
 bot.onText(/^\/nasa(@LesCoquitesBot)?$/, msg => {
   const chatId = msg.chat.id
@@ -138,15 +62,6 @@ function showStatus(estados) {
   })
   return showable.join("\r\n")
 }
-
-var port = process.env.PORT || 3000
-http.listen(port, function() {
-  console.log("listening on *:" + port)
-})
-
-bot.onText(/^\/proximoafter(@LesCoquitesBot)?$/, msg => {
-  bot.sendMessage(msg.chat.id, "Lamentablemente ya no hay más afters")
-})
 
 bot.onText(/^\/chucknorris(@LesCoquitesBot)?/, msg => {
   request.get(apis.chuckNorris, (err, httpResponse, body) => {
@@ -397,8 +312,6 @@ bot.onText(/^\/[Y|y]ou[T|t]ube [0-9a-zA-Zñáéíóúü ]*$/i, msg => {
     },
   )
 })
-
-require("./schedule")
 
 bot.onText(/^\/[W|w]ikipedia(@LesCoquitesBot)?/, msg => {
   if (msg.from.username) {
