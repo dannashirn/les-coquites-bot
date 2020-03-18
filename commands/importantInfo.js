@@ -3,7 +3,7 @@ const axios = require("axios")
 module.exports = bot => {
   console.log("Important Info commands enabled")
 
-  bot.onText(/\/coronavirus(@LesCoquitesBot)?/, msg => {
+  bot.onText(/^\/coronavirus(@LesCoquitesBot)?/, msg => {
     axios
       .get("https://d1q0nvr1cscr0c.cloudfront.net/coronavirus/coronavirus.json")
       .then(response => {
@@ -15,11 +15,41 @@ module.exports = bot => {
             message = message.concat(
               item.currency,
               ": ",
-              item.unico / 1000,
+              item.unico.toLocaleString(),
               "\n",
             )
           }
         }
+        bot.sendMessage(msg.chat.id, message)
+      })
+      .then(error => {
+        console.log(error)
+        if (error) {
+          bot.sendMessage(
+            msg.chat.id,
+            "The required API for this command is not working, please contact the bot admin",
+          )
+        }
+      })
+  })
+
+  bot.onText(/^\/coronarg(@LesCoquitesBot)?/, msg => {
+    axios
+      .get("https://corona.lmao.ninja/countries/argentina")
+      .then(response => {
+        var message = ""
+        const data = response.data
+          message = message.concat(
+            "CASOS CONFIRMADOS: ",
+            data.cases.toLocaleString(),
+            "\n",
+            "SANADOS: ",
+            data.recovered.toLocaleString(),
+            "\n",
+            "MUERTOS: ",
+            data.deaths.toLocaleString(),
+            "\n"
+          )
         bot.sendMessage(msg.chat.id, message)
       })
       .then(error => {
