@@ -45,18 +45,20 @@ module.exports = bot => {
   console.log("Guita commands enabled")
 
   bot.onText(/^\/btc(@LesCoquitesBot)?$/, msg => {
-    sendCryptoValue('BTC', bot, msg);
+    const chatId = msg.chat.id;
+    sendCryptoValue('BTC', bot, chatId);
   })
 
   bot.onText(/^\/eth(@LesCoquitesBot)?$/, msg => {
-    sendCryptoValue('ETH', bot, msg);
+    const chatId = msg.chat.id;
+    sendCryptoValue('ETH', bot, chatId);
   })
 
   bot.onText(/^\/crypto [a-zA-Z]+(@LesCoquitesBot)?/, msg => {
     const chatId = msg.chat.id;
     const crypto = msg.text.split("/crypto ").pop().toUpperCase();
     if(crypto && (crypto.length === 3 || crypto.length === 4)){
-      sendCryptoValue(crypto, bot, msg)
+      sendCryptoValue(crypto, bot, chatId)
     }else {
       bot.sendMessage(chatId, 'Pero mandame un simbolo valido...')
     }
