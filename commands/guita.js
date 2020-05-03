@@ -2,40 +2,68 @@ const axios = require("axios")
 const apis = require("../config/apis")
 const keys = require("../config/keys")
 
-const displayError = (error, chatId) => {
+const displayError = (bot, error, chatId) => {
   if (error) {
     console.log(error)
     bot.sendMessage(
       chatId,
-      "There seems to be an issue with the API required for this command, please contact the bot's admins",
+      "There seems to be an issue with the API required for this command, please contact the bot's admins.",
     )
   }
 }
+
+const cryptoIds = {BTC: "1", ETH: "1027"};
+const getCoinbaseParams = crypto => cryptoIds[crypto] ? { id: cryptoIds[crypto] } : { symbol: crypto };
+
+const getCryptoValue = crypto => {
+      const symbolOrId = cryptoIds[crypto] ? cryptoIds[crypto] : crypto;
+      return axios.get(apis.btcProAPI, {
+          params: getCoinbaseParams(crypto),
+          headers: {
+            "X-CMC_PRO_API_KEY": keys.bitcoinKey,
+          },
+        })
+        .then(response => response.data.data[symbolOrId].quote.USD.price.toFixed(2))
+        .catch(error => {throw error})}
+
+const sendCryptoValue = (crypto, bot, chatId) => {
+  getCryptoValue(crypto)
+      .then(cryptoValue => {
+        bot.sendMessage(chatId, "$" + cryptoValue)
+      })
+      .catch(error => {
+        if(error.response.status === 400){
+          bot.sendMessage(chatId, crypto + ' no existe, por lo que nada te impide crearla.')
+        } else{
+          displayError(bot, error, chatId)
+        }
+      })
+}
+
 
 module.exports = bot => {
   console.log("Guita commands enabled")
 
   bot.onText(/^\/btc(@LesCoquitesBot)?$/, msg => {
-    axios
-      .get(apis.btcProAPI, {
-        params: {
-          id: 1,
-        },
-        headers: {
-          "X-CMC_PRO_API_KEY": keys.bitcoinKey,
-        },
-      })
-      .then(response => {
-        bot.sendMessage(
-          msg.chat.id,
-          "$" + response.data.data["1"].quote.USD.price.toFixed(2),
-        )
-      })
-      .then(error => displayError(error, msg.chat.id))
+    sendCryptoValue('BTC', bot, msg);
+  })
+
+  bot.onText(/^\/eth(@LesCoquitesBot)?$/, msg => {
+    sendCryptoValue('ETH', bot, msg);
+  })
+
+  bot.onText(/^\/crypto [a-zA-Z]+(@LesCoquitesBot)?/, msg => {
+    const chatId = msg.chat.id;
+    const crypto = msg.text.split("/crypto ").pop().toUpperCase();
+    if(crypto && (crypto.length === 3 || crypto.length === 4)){
+      sendCryptoValue(crypto, bot, msg)
+    }else {
+      bot.sendMessage(chatId, 'Pero mandame un simbolo valido...')
+    }
   })
 
   bot.onText(/^\/dolar(@LesCoquitesBot)?$/, msg => {
-    var chatId = msg.chat.id
+    const chatId = msg.chat.id
 
     axios
       .get(apis.dolarPiola)
@@ -49,12 +77,12 @@ module.exports = bot => {
             .concat(dolar[dolar.length - 1].blue_venta),
         )
       })
-      .then(error => displayError(error, msg.chat.id))
+      .then(error => displayError(bot, error, chatId))
   })
 
   bot.onText(/^\/dolar (\d\d\d\d-\d\d-\d\d)$/, msg => {
-    var chatId = msg.chat.id
-    let date = msg.text
+    const chatId = msg.chat.id
+    const date = msg.text
       .split("dolar")
       .pop()
       .trim()
@@ -79,6 +107,6 @@ module.exports = bot => {
           bot.sendMessage(chatId, "No encontré cotización para ese día")
         }
       })
-      .then(error => displayError(error, msg.chat.id))
+      .then(error => displayError(bot, error, chatId))
   })
 }
