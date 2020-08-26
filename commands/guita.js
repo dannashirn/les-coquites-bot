@@ -75,6 +75,8 @@ module.exports = bot => {
           chatId,
           "El oficial está $"
             .concat(dolar[dolar.length - 1].oficial_venta)
+            .concat(", el \"solidario \" está: ")
+            .concat(dolar[dolar.length - 1].oficial_venta * 1.3)
             .concat(" y el blue $")
             .concat(dolar[dolar.length - 1].blue_venta),
         )
