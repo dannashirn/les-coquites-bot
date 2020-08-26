@@ -75,7 +75,6 @@ function proximoFeriado(feriados) {
   } else {
     return proximos[0]
   }
-  //[0];
 }
 
 function diasHastaFeriado(feriado) {
@@ -407,36 +406,6 @@ bot.onText(/^\/[W|w]ikipedia(@LesCoquitesBot)?/, msg => {
     var displayName = msg.from.first_name
   }
 
-  /*  const languages = {
-      reply_markup: {
-        inline_keyboard:
-        [[{
-          text: 'Español',
-          callback_data: 'ES'
-        }],
-        [{
-          text: 'Ingles',
-          callback_data: 'EN'
-        }]]
-      }
-    };
-  
-    bot.sendMessage(msg.chat.id, "Selecciona el idioma que quieras", languages);
-  
-    bot.on('callback_query', function onCallbackQuery(callbackQuery) {
-      const lan = callbackQuery.data;
-  
-      if (lan === 'EN'){
-        var wiki_api = apis.wikipediaEN;
-        var wik_url = "https://en.wikipedia.org/?curid=";
-        console.log("INGLES")
-      }else if (lan === 'ES'){
-        var wiki_api = apis.wikipediaES;
-        var wiki_url = "https://es.wikipedia.org/?curid=";
-      }
-  
-    });*/
-
   var query = encodeURIComponent(
     msg.text
       .toLowerCase()
@@ -445,7 +414,6 @@ bot.onText(/^\/[W|w]ikipedia(@LesCoquitesBot)?/, msg => {
   )
   request.get(apis.wikipediaES.concat(query), (err, response, body) => {
     const wiki_url = "https://es.wikipedia.org/?curid="
-    //const wiki_url_en = "https://en.wikipedia.org/?curid=";
 
     var articulos = JSON.parse(body).query.search.slice(0, 3)
 
